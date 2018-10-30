@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Goods_image extends Model
+class sku extends Model
 {
     //
 }

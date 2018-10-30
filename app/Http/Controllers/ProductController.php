@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\classify;
 use Storage;
 
 class ProductController extends Controller
@@ -80,10 +81,53 @@ class ProductController extends Controller
     public function Category_Manage(){
         return view('product.Category_Manage');
     }
+    //想页面传数据分类
     public function product_category_add()
     {
-        return view('product.product_category_add');
+        $classify = new classify;
+        $data = $classify->doproduct_category_add();
+        // dd($data);
+        return view('product.product_category_add',
+            ['data' => $data]
+        );
     }
+    //向数据库保存
+    public function doproduct_category_add(Request $req)
+    {
+        $classify = new classify;
+        $ify = $req->all();
+       
+
+        if($ify['ify_pid']==0)
+        {
+            $ify['ify_path'] = '-';
+        }
+        else
+        {
+           $res = classify::where('id',$ify['ify_pid'])->first(['ify_path']);
+           $ify['ify_path'] = $res->ify_path.$ify['ify_pid'].'-';
+        }
+        $classify->fill($ify);
+        $aa = $classify->save();
+        if($aa == true)
+        {
+            return redirect()->route('product_category_index');
+        }
+
+    }
+    //分类
+    public function product_category_index()
+    {
+        $classify = new classify;
+        $data = $classify->doproduct_category_index();
+        return view('product.product_category_index',
+        ['data' => $data]
+    );
+    }
+    // public function doproduct_category_index()
+    // {
+    //     return view('product.product_category_index');
+    // }
     //品牌添加
     public function Add_Brand()
     {

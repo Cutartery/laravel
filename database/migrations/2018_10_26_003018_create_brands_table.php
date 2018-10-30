@@ -15,13 +15,12 @@ class CreateBrandsTable extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('id')->comment('id');
-            $table->string('title')->comment('品牌名称');
-            $table->char('serial')->comment('品牌序列号');
-            $table->string('file',200)->comment('图片');
-            $table->string('place')->comment('所属地区');
-            $table->string('brand')->comment('品牌描述');
-            $table->tinyInteger('status')->comment('状态');
+            $table->string('brand_name')->comment('品牌名称');
+            $table->unsignedInteger('brand_pid')->comment('pid');
+            $table->string('brand_path')->comment('path');
+            $table->string('brand_logo')->comment('logo');
             $table->timestamps();
+            $table->comment = '品牌表';
         });
     }
 
