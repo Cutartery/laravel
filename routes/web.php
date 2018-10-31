@@ -49,6 +49,10 @@ Route::post('/doproduct_category_add','ProductController@doproduct_category_add'
 //分类
 Route::get('/product_category_index','ProductController@product_category_index')->name('product_category_index');
 Route::post('/doproduct_category_index','ProductController@doproduct_category_index')->name('doproduct_category_index');
+//分类修改
+Route::get('/product_category_insert/{id}','ProductController@product_category_insert')->name('product_category_insert');
+Route::post('/doproduct_category_insert/{id}','ProductController@doproduct_category_insert')->name('doproduct_category_insert');
+
 
 Route::get('/Brand_Manage','ProductController@Brand_Manage')->name('Brand_Manage');
 Route::get('/Category_Manage','ProductController@Category_Manage')->name('Category_Manage');

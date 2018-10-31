@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\classify;
 use Storage;
 
+
 class ProductController extends Controller
 {
     //添加完显示页面
@@ -81,31 +82,33 @@ class ProductController extends Controller
     public function Category_Manage(){
         return view('product.Category_Manage');
     }
-    //想页面传数据分类
+    //向页面传数据分类添加
     public function product_category_add()
     {
-        $classify = new classify;
-        $data = $classify->doproduct_category_add();
-        // dd($data);
+        $data = classify::get();
+        foreach($data as $k => $v)
+        {
+            if(count(explode('-',$v->ify_path))>=4){
+                unset($data[$k]);
+            }
+        }
         return view('product.product_category_add',
             ['data' => $data]
         );
     }
-    //向数据库保存
+    //向数据库保存分类添加
     public function doproduct_category_add(Request $req)
     {
         $classify = new classify;
         $ify = $req->all();
-       
-
         if($ify['ify_pid']==0)
         {
             $ify['ify_path'] = '-';
         }
         else
         {
-           $res = classify::where('id',$ify['ify_pid'])->first(['ify_path']);
-           $ify['ify_path'] = $res->ify_path.$ify['ify_pid'].'-';
+            $res = classify::where('id',$ify['ify_pid'])->first();
+            $ify['ify_path'] = $res->ify_path.$ify['ify_pid'].'-';
         }
         $classify->fill($ify);
         $aa = $classify->save();
@@ -113,21 +116,50 @@ class ProductController extends Controller
         {
             return redirect()->route('product_category_index');
         }
+    }
+    //修改页面
+    public function product_category_insert($id)
+    {
+        $data = classify::where('id',$id)->first();
+        $awsc = classify::get();
+        foreach($awsc as $k => $v)
+        {
+            if(count(explode('-',$v->ify_path))>=4){
+                unset($awsc[$k]);
+            }
+        }
+       return view('product.product_category_insert',[
+            'data' => $data,
+            'awsc' => $awsc,
+       ]);
+    }
+    //执行修改页面
+    public function doproduct_category_insert(Request $req)
+    {
+        dd($req->all());
+        classify::where('id',$req->id)->update(['ify_name' => $req->ify_name]);
 
     }
-    //分类
+    //分类主页面
     public function product_category_index()
     {
         $classify = new classify;
         $data = $classify->doproduct_category_index();
         return view('product.product_category_index',
         ['data' => $data]
-    );
+        );
     }
-    // public function doproduct_category_index()
-    // {
-    //     return view('product.product_category_index');
-    // }
+    //分类主页删除ajax
+    public function doproduct_category_index(Request $req)
+    {
+        classify::where('id',$req->id)->delete();
+        classify::where('ify_pid',$req->id)->delete();
+        classify::where('ify_path','like','%-'.$req->id.'-%')->delete();
+        
+    }
+
+
+
     //品牌添加
     public function Add_Brand()
     {

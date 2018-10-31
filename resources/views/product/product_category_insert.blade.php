@@ -20,35 +20,52 @@
 		<![endif]-->
   <script src="js/jquery-1.9.1.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
-  <title>添加产品分类</title>
+  <title>修改产品分类</title>
 </head>
 
 <body>
   <div class="type_style">
     <div class="type_title">产品类型信息</div>
     <div class="type_content">
-    <form action="{{route('doproduct_category_add')}}" method="post" class="form form-horizontal" id="form-user-add">
+    <form action="{{route('doproduct_category_insert',['id'=>$data['id']])}}" method="post" class="form form-horizontal" id="form-user-add">
         @csrf
-      <div class="Operate_cont clearfix">
-          <label class="form-label"><span class="c-red">*</span>添加分类：</label>
-          <input type="text" name="ify_name">          
-          <br>
-          <br>
-        <div class="">
-          <div class="" style=" text-align:center">
-          <label class="form-label"><span class="c-red">*</span>选择分类:</label>
-          <select name="ify_pid" id="">
-            <option value="0">根级分类</option>
-              @foreach ($data as $v)
-              <option value="{{$v->id}}">{{$v->ify_name}}</option>
-                  
-              @endforeach
-          </select>
-          <br>
-          <br>
-            <input class="btn btn-primary radius" id="asd" type="submit" value="提交">
+        <div class="table_menu_list" id="testIframe">
+           <table class="table table-striped table-bordered table-hover" id="sample-table">
+              <thead>
+                  <tr>
+                      <th width="10%">ID</th>
+                      <th width="20%">分类名称</th>
+                      <th width="20%">父级分类</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td width="10%">
+                        <input type="text" readonly  unselectable="on"  name="id" value="{{$data['id']}}">
+                      </td>
+                      <td width="20%">
+                          <input type="text" name="ify_name" value="{{$data['ify_name']}}">
+                        
+                      </td>
+                      <td width="20%">
+                          <select id="fgh">
+                            <option  value="0">根级分类</option>
+                              @foreach ($awsc as $v)
+                             
+                                <option  @if($data['ify_pid'] == $v->id) selected @endif value="{{$v->id}}">{{$v->ify_name}}</option>
+                              
+                              @endforeach
+                          </select>
+                      </td>
+
+                  </tr>
+              </tbody>
+            </table>
+           </div>
           </div>
         </div>
+        <input class="btn btn-primary radius" id="asd" type="submit" value="提交">
+
       </form>
     </div>
   </div>
@@ -59,6 +76,7 @@
   <script type="text/javascript" src="js/H-ui.js"></script>
   <script type="text/javascript" src="js/H-ui.admin.js"></script>
   <script type="text/javascript">
+  $('#fgh').prop({'disabled',true});  
   $('#asd').click(function(){
     $(this).submit();
     $(this).attr('disabled',true);

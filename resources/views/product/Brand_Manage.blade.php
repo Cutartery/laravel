@@ -54,18 +54,16 @@
                 <span class="l_f">
                     <a href="{{route('Add_Brand')}}" title="添加品牌" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加品牌</a>
                     <a href="javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
-                    <a href="javascript:ovid()" class="btn btn-info">国内品牌</a>
-                    <a href="javascript:ovid()" class="btn btn-success">国外品牌</a>
                 </span>
                 <span class="r_f">共：<b>234</b>个品牌</span>
             </div>
-            <!--品牌展示-->
-            <div class="brand_list clearfix" id="category">
+            <!--品牌展示js-->
+            {{-- <div class="brand_list clearfix" id="category">
                 <div class="show_btn" id="rightArrow"><span></span></div>
                 <div class="chart_style side_content">
                     <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
                     <div id="main" style="height:300px;" class="side_list"></div>
-                </div>
+                </div> --}}
                 <!--品牌列表-->
                 <div class="table_menu_list">
                     <table class="table table-striped table-bordered table-hover" id="sample-table">
