@@ -45,6 +45,9 @@ Route::get('/Add_Brand','ProductController@Add_Brand')->name('Add_Brand');
 Route::post('/doAdd_Brand','ProductController@doAdd_Brand')->name('doAdd_Brand');
 //品牌首页
 Route::get('/Brand_Manage','ProductController@Brand_Manage')->name('Brand_Manage');
+//品牌修改
+Route::get('/Add_Brand_update/{id}','ProductController@Add_Brand_update')->name('Add_Brand_update');
+Route::post('/doAdd_Brand_update/{id}','ProductController@doAdd_Brand_update')->name('doAdd_Brand_update');
 
 
 //分类管理

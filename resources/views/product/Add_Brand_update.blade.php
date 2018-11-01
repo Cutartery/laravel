@@ -3,65 +3,71 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>添加品牌</title>
+    <title>修改品牌</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="assets/css/ace.min.css" />
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
-    <link href="Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link href="/Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
     <!--[if IE 7]>
 		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
     <!--[if lte IE 8]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/typeahead-bs2.min.js"></script>
-    <script src="assets/layer/layer.js" type="text/javascript"></script>
-    <script type="text/javascript" src="Widget/swfupload/swfupload.js"></script>
-    <script type="text/javascript" src="Widget/swfupload/swfupload.queue.js"></script>
-    <script type="text/javascript" src="Widget/swfupload/swfupload.speed.js"></script>
-    <script type="text/javascript" src="Widget/swfupload/handlers.js"></script>
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/typeahead-bs2.min.js"></script>
+    <script src="/assets/layer/layer.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Widget/swfupload/swfupload.js"></script>
+    <script type="text/javascript" src="/Widget/swfupload/swfupload.queue.js"></script>
+    <script type="text/javascript" src="/Widget/swfupload/swfupload.speed.js"></script>
+    <script type="text/javascript" src="/Widget/swfupload/handlers.js"></script>
 </head>
 
 <body>
-<form action="{{route('doAdd_Brand')}}" method="post" enctype="multipart/form-data">
+<form action="{{route('doAdd_Brand_update',['id'=>$data['id']])}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class=" clearfix">
         <div id="add_brand" class="clearfix">
             <div class="left_add">
-                <div class="title_name">添加品牌</div>
+                <div class="title_name">修改品牌</div>
                 <ul class="add_conent">
                     <li class=" clearfix">
                         <label class="label_name"><i>*</i>品牌名称：</label> 
-                        <input name="brand_name" type="text" />
+                        <input name="brand_name" value="{{$data['brand_name']}}" type="text" />
                     </li>
                     <li class=" clearfix">
                         <label class="label_name">品牌图片：</label>
                         <div class="demo l_f">
+                                <div class='img_preview'>
+                                    <img src="{{$data['brand_logo']}}" width="150" alt="">
+                                </div>
                             <input class="image" type="file" name="brand_logo">
                         </div>
                     </li>
                     <li class=" clearfix">
                             <label class="label_name">品牌描述：</label> 
-                            <textarea name="brand_content" cols="" rows="" class="textarea" onkeyup="checkLength(this);"></textarea>
+                            <textarea name="brand_content" cols="" value="" rows="" class="textarea" onkeyup="checkLength(this);">{{$data['brand_content']}}</textarea>
                             <span class="wordage">剩余字数：
                                 <span id="sy" style="color:Red;">500
                                 </span>字
                             </span>
                         </li>
                     <li>
+                    <input type="hidden" name="logo" value="{{$data['brand_logo']}}">
                         <div class="table_menu_list" id="testIframe">
                             <table class="table table-striped table-bordered table-hover" id="sample-table">
                                 <tbody>
-                                    @foreach ($data as $v)
+                                    @foreach ($asdf as $v)
                                     <tr>
-                                        <td width="25px"><label><input type="checkbox" name="die[]" value="{{$v->id}}" class="ace"><span class="lbl"></span></label></td>
+
+                                        <td width="25px"><label><input @if(in_array($v->id,$type)) checked="checked"  @endif type="checkbox" name="die[]" value="{{$v->id}}" class="ace"><span class="lbl"></span></label></td>
+                                        
                                         <td>{{$v->ify_name}}</td>
                                     </tr>
                                     @endforeach
@@ -71,39 +77,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="right_add">
-                <div class="title_name">添加商品</div>
-
-                <div class="p_select_list">
-                    <div class="left_produt produt_select_style">
-                        <div id="select_style"></div>
-                        <span class="seach_style"><input name="" type="text" id="seach"/ class="seach"><i class="icon-search"></i></span>
-                    </div>
-                    <div class="Switching_btn">
-
-                        <span id="add_all" class="Switching">
-                            <input type="button" class="btn btn-warning" value=">>" />
-                        </span>
-                        <span id="add" class="Switching">
-                            <input type="button" class="btn btn-primary" value=">" />
-                        </span>
-                        <span id="remove" class="Switching">
-                            <input type="button" class="btn btn-primary" value="<" />
-                        </span>
-                        <span id="remove_all" class="Switching">
-                            <input type="button" class="btn btn-warning" value="<<" />
-                        </span>
-                    </div>
-                    <div class="right_product produt_select_style">
-                        <div class="title_name">归类商品</div>
-                        <select multiple="multiple" id="select2" class="select">
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="button_brand">
-            <input name="" type="submit" class="btn btn-warning" value="保存" />
+            <input id='wasd' name="" type="submit" class="btn btn-warning" value="保存" />
             <input name="" type="reset" value="取消" class="btn btn-warning" />
         </div>
     </div>
@@ -112,7 +87,9 @@
 
 </html>
 <script type="text/javascript">
-
+    $('#wasd').click(function(){
+        $(this).submit();
+    })
     function getObjectUrl(file) {
     var url = null;
     if (window.createObjectURL != undefined) {
@@ -246,21 +223,14 @@
             }
             product + "</select>";
         });
-
         var product = "<div class='title_name'>产品名称</div>";
-
         product += "<select multiple='multiple' id='select1' class='select'";
         $.each(user, function (id, item) {
             name = item.name;
             status = item.status;
             product += "<option value=" + item.id + " title=" + item.name + ">" + "(" + item.status + ")" + item.name + "</option>";
-
         })
         product + "</select>";
         $("#select_style").html(product);
-
-
-
-
     })
 </script>

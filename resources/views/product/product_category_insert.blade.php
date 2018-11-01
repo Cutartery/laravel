@@ -12,12 +12,6 @@
   <link rel="stylesheet" href="assets/css/ace.min.css" />
   <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
   <link href="Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
-  <!--[if IE 7]>
-		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
-		<![endif]-->
-  <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-		<![endif]-->
   <script src="js/jquery-1.9.1.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <title>修改产品分类</title>

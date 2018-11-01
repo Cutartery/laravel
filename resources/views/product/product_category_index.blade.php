@@ -85,6 +85,10 @@
 </html>
 <script>
 
+   if("{{session('errors')}}") 
+    {
+        layer_close(parent.window.location.href="{{route('product_category_index')}}");
+    }
     jQuery(function ($) {
         var oTable1 = $('#sample-table').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序

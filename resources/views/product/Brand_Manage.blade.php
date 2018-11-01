@@ -95,7 +95,7 @@
                                     <a onClick="member_stop(this,'10001')" href="javascript:;" title="停用" class="btn btn-xs btn-success">
                                         <i class="icon-ok bigger-120"></i>
                                     </a>
-                                    <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;" class="btn btn-xs btn-info">
+                                    <a title="编辑" onclick="member_edit('编辑','/Add_Brand_update/','{{$v->id}}','','510')" href="javascript:;" class="btn btn-xs btn-info">
                                         <i class="icon-edit bigger-120"></i>
                                     </a>
                                     <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="btn btn-xs btn-warning">
@@ -219,7 +219,7 @@
     }
     /*品牌-编辑*/
     function member_edit(title, url, id, w, h) {
-        layer_show(title, url, w, h);
+        layer_show(title, url+id, w, h);
     }
 
     /*品牌-删除*/

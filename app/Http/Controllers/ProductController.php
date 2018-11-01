@@ -113,21 +113,35 @@ class ProductController extends Controller
             return redirect()->route('product_category_index');
         }
     }
-    //修改页面
+    //修改分类页面
     public function product_category_insert($id)
     {
         $data = classify::where('id',$id)->first();
+        if($data->ify_pid == 0)
+        {
+            $data->ify_pid = $data->id;
+        }
         $awsc = classify::where('id',$data->ify_pid)->first();
+        // dd($awsc);
        return view('product.product_category_insert',[
             'data' => $data,
             'awsc' => $awsc,
        ]);
     }
-    //执行修改页面
+    //执行修改分类页面
     public function doproduct_category_insert(Request $req)
     {
-        dd($req->all());
-        classify::where('id',$req->id)->update(['ify_name' => $req->ify_name]);
+        // dd($req->all());
+       $aa = classify::where('id',$req->id)->update(['ify_name' => $req->ify_name]);
+    //    dd($aa);
+       if($aa==true)
+       {
+           return redirect()->route('product_category_index')->with('errors','234');
+       }
+       else
+       {
+           return back();
+       }
 
     }
     //分类主页面
@@ -192,6 +206,54 @@ class ProductController extends Controller
         return view('product.Brand_Manage',
             ['data'=>$data]
         );
+    }
+    //向修改页面传输数据
+    public function Add_Brand_update($id)
+    {
+        $classify = new classify;
+        $asdf = $classify->doproduct_category_index();
+        $data = Brand::where('id',$id)->first();
+        $type = bran_ify::Add_Brand_update($id);
+        $arr = [];
+
+        foreach($type as $v){
+            $arr[] = $v->id;
+        }
+
+        return view('product.Add_Brand_update',
+        [
+            'asdf' => $asdf,
+            'data' => $data,
+            'type' => $arr
+        ]);
+    }
+
+    public function doAdd_Brand_update(Request $req,$id)
+    {
+        $brand = new Brand;
+        $brand->fill($req->all());
+        $arr = [];
+        if(isset($req->brand_logo))
+        {
+            $cc = Storage::disk('lms')->delete($req->logo);
+            $brand->brand_logo ='/upload/'.$req->brand_logo->store('brand/'.date('Ymd'));
+            $arr = [
+                'brand_logo' => $brand->brand_logo,
+            ];
+        }
+        $arr += [
+            'brand_name' => $req->brand_name,
+            'brand_content' =>$req->brand_content,
+        ];
+        Brand::where('id',$id)->update($arr);
+        bran_ify::where('brand_id',$id)->delete();
+        foreach($req->die as $v)
+        {
+            bran_ify::insert([
+                'brand_id' => $id,
+                'ify_id' => $v
+            ]);
+        }
     }
     public function Category_Manage(){
         return view('product.Category_Manage');
