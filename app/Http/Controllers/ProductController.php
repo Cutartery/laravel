@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\classify;
+use App\Models\bran_ify;
 use Storage;
 
 
@@ -76,12 +77,7 @@ class ProductController extends Controller
             return back();
         }
     }
-    public function Brand_Manage(){
-        return view('product.Brand_Manage');
-    }
-    public function Category_Manage(){
-        return view('product.Category_Manage');
-    }
+ 
     //向页面传数据分类添加
     public function product_category_add()
     {
@@ -121,13 +117,7 @@ class ProductController extends Controller
     public function product_category_insert($id)
     {
         $data = classify::where('id',$id)->first();
-        $awsc = classify::get();
-        foreach($awsc as $k => $v)
-        {
-            if(count(explode('-',$v->ify_path))>=4){
-                unset($awsc[$k]);
-            }
-        }
+        $awsc = classify::where('id',$data->ify_pid)->first();
        return view('product.product_category_insert',[
             'data' => $data,
             'awsc' => $awsc,
@@ -146,8 +136,7 @@ class ProductController extends Controller
         $classify = new classify;
         $data = $classify->doproduct_category_index();
         return view('product.product_category_index',
-        ['data' => $data]
-        );
+        ['data' => $data]);
     }
     //分类主页删除ajax
     public function doproduct_category_index(Request $req)
@@ -155,30 +144,57 @@ class ProductController extends Controller
         classify::where('id',$req->id)->delete();
         classify::where('ify_pid',$req->id)->delete();
         classify::where('ify_path','like','%-'.$req->id.'-%')->delete();
-        
     }
+
+
+
 
 
 
     //品牌添加
     public function Add_Brand()
     {
-        return view('product.Add_Brand');
+        $classify = new classify;
+        $data = $classify->doproduct_category_index();
+
+        return view('product.Add_Brand',['data' => $data]);
     }
+
     //品牌添加处理
     public function doAdd_Brand(Request $req)
     {
-        // dd($req->all());
         $brand = new Brand;
         $brand->fill($req->all());
-        if($req->hasFile('file') && $req->file('file')->isValid()){
-            $brand->file ='/upload/'.$req->file->store('brand/'.date('Ymd'));
+        
+        if($req->hasFile('brand_logo') && $req->file('brand_logo')->isValid()){
+            $brand->brand_logo ='/upload/'.$req->brand_logo->store('brand/'.date('Ymd'));
         }
         $aa = $brand->save();
+        $b_id = $brand->id;
+
+        foreach($req->die as $v){
+            $bran_ify = new bran_ify;
+
+            $bran_ify->brand_id = $b_id;
+            $bran_ify->ify_id = $v;
+
+            $bran_ify->save();
+        }
         if($aa == true)
         {
-            return redirect()->route('Category_Manage');
+            return redirect()->route('Brand_Manage');
         }
+    }
+    //品牌首页
+    public function Brand_Manage(){
+        $data = Brand::get();
+
+        return view('product.Brand_Manage',
+            ['data'=>$data]
+        );
+    }
+    public function Category_Manage(){
+        return view('product.Category_Manage');
     }
     public function Brand_detailed()
     {
@@ -196,7 +212,6 @@ class ProductController extends Controller
     {
         $product = new Product;
         $product->fill($req->all());
-        // dd($req->all());
         if($req->hasFile('file') && $req->file('file')->isValid()){
             $product->file ='/upload/'.$req->file->store('product/'.date('Ymd'));
         }

@@ -43,6 +43,10 @@ Route::post('/dopicture_add','ProductController@dopicture_add')->name('dopicture
 //品牌添加
 Route::get('/Add_Brand','ProductController@Add_Brand')->name('Add_Brand');
 Route::post('/doAdd_Brand','ProductController@doAdd_Brand')->name('doAdd_Brand');
+//品牌首页
+Route::get('/Brand_Manage','ProductController@Brand_Manage')->name('Brand_Manage');
+
+
 //分类管理
 Route::get('/product_category_add','ProductController@product_category_add')->name('product_category_add');
 Route::post('/doproduct_category_add','ProductController@doproduct_category_add')->name('doproduct_category_add');
@@ -54,7 +58,6 @@ Route::get('/product_category_insert/{id}','ProductController@product_category_i
 Route::post('/doproduct_category_insert/{id}','ProductController@doproduct_category_insert')->name('doproduct_category_insert');
 
 
-Route::get('/Brand_Manage','ProductController@Brand_Manage')->name('Brand_Manage');
 Route::get('/Category_Manage','ProductController@Category_Manage')->name('Category_Manage');
 Route::get('/Brand_detailed','ProductController@Brand_detailed')->name('Brand_detailed');
 Route::get('/member_show','ProductController@member_show')->name('member_show');

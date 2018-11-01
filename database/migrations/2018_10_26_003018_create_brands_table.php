@@ -16,9 +16,8 @@ class CreateBrandsTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->increments('id')->comment('id');
             $table->string('brand_name')->comment('品牌名称');
-            $table->unsignedInteger('brand_pid')->comment('pid');
-            $table->string('brand_path')->comment('path');
             $table->string('brand_logo')->comment('logo');
+            $table->text('brand_content')->comment('品牌描述');
             $table->timestamps();
             $table->comment = '品牌表';
         });

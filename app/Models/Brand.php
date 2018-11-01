@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    protected $fillable = ['title','serial','file','place','brand','status'];
+    protected $fillable = ['brand_name','brand_logo'];
 
     public function add_Brand()
     {

@@ -48,16 +48,8 @@
                         
                       </td>
                       <td width="20%">
-                          <select id="fgh">
-                            <option  value="0">根级分类</option>
-                              @foreach ($awsc as $v)
-                             
-                                <option  @if($data['ify_pid'] == $v->id) selected @endif value="{{$v->id}}">{{$v->ify_name}}</option>
-                              
-                              @endforeach
-                          </select>
+                          <input type="text" readonly  unselectable="on" value="{{$awsc->ify_name}}">
                       </td>
-
                   </tr>
               </tbody>
             </table>
