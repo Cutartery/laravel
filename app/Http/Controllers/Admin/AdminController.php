@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use App\Models\Admin\Admin;
 class AdminController extends Controller
 {
     public function user()
     {
-       return view('admin.login');
+       return view('admin.admin.login');
     }
     public function douser(Request $req)
     {

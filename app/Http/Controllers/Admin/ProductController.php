@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Brand;
-use App\Models\classify;
-use App\Models\bran_ify;
+use App\Models\Admin\Product;
+use App\Models\Admin\Brand;
+use App\Models\Admin\classify;
+use App\Models\Admin\bran_ify;
 use Storage;
 
 
@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     //添加商品页面显示
     public function picture_add(){
-        return view('index.picture_add');
+        return view('admin.index.picture_add');
     }
     public function dopicture_add(Request $req)//页面传来数据
     {
@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function Products_List()
     {
 
-        return view('product.products_List');
+        return view('admin.product.products_List');
     }
     //产品删除
     public function delproducts_List(Request $req)
@@ -40,7 +40,7 @@ class ProductController extends Controller
     public function member_add($id)
     {
 
-        return view('product.member_add');
+        return view('admin.product.member_add');
     }
     //产品添加
     public function domember_add(Request $req)
@@ -65,7 +65,7 @@ class ProductController extends Controller
                 unset($data[$k]);
             }
         }
-        return view('product.product_category_add',
+        return view('admin.product.product_category_add',
             ['data' => $data]
         );
     }
@@ -100,7 +100,7 @@ class ProductController extends Controller
         }
         $awsc = classify::where('id',$data->ify_pid)->first();
         // dd($awsc);
-       return view('product.product_category_insert',[
+       return view('admin.product.product_category_insert',[
             'data' => $data,
             'awsc' => $awsc,
        ]);
@@ -126,7 +126,7 @@ class ProductController extends Controller
     {
         $classify = new classify;
         $data = $classify->doproduct_category_index();
-        return view('product.product_category_index',
+        return view('admin.product.product_category_index',
         ['data' => $data]);
     }
     //分类主页删除ajax
@@ -148,7 +148,7 @@ class ProductController extends Controller
         $classify = new classify;
         $data = $classify->doproduct_category_index();
 
-        return view('product.Add_Brand',['data' => $data]);
+        return view('admin.product.Add_Brand',['data' => $data]);
     }
 
     //品牌添加处理
@@ -184,7 +184,7 @@ class ProductController extends Controller
     public function Brand_Manage(){
         $data = Brand::get();
 
-        return view('product.Brand_Manage',
+        return view('admin.product.Brand_Manage',
             ['data'=>$data]
         );
     }
@@ -201,7 +201,7 @@ class ProductController extends Controller
             $arr[] = $v->id;
         }
 
-        return view('product.Add_Brand_update',
+        return view('admin.product.Add_Brand_update',
         [
             'asdf' => $asdf,
             'data' => $data,
@@ -253,15 +253,15 @@ class ProductController extends Controller
         bran_ify::where('brand_id',$req->id)->delete();
     }
     public function Category_Manage(){
-        return view('product.Category_Manage');
+        return view('admin.product.Category_Manage');
     }
     public function Brand_detailed()
     {
-        return view('product.Brand_detailed');
+        return view('admin.product.Brand_detailed');
     }
     public function member_show()
     {
-        return view('product.member_show');
+        return view('admin.product.member_show');
     }
 
 }
