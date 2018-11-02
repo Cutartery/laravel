@@ -93,28 +93,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach($data as $v)
+                          {{-- @foreach($data as $v) --}}
                             <tr>
-                                <td width="25px"><label><input type="checkbox" name="die[]" value="{{$v->id}}" class="ace"><span class="lbl"></span></label></td>
-                                <td width="80px">{{$v->id}}</td>
-                                <td width="250px"><u style="cursor:pointer" class="text-primary" onclick="">{{$v->content}}</u></td>
-                                <td ><img src="{{$v->file}}" width="50" height="50" alt=""></td>
-                                <td width="100px">{{$v->zprice}}</td>
-                                <td width="100px">{{$v->sprice}}</td>
-                                <td width="100px">{{$v->place}}</td>
-                                <td width="180px">{{$v->created_at}}</td>
+                                <td width="25px"><label><input type="checkbox" name="die[]" value="#" class="ace"><span class="lbl"></span></label></td>
+                                <td width="80px">#</td>
+                                <td width="250px"><u style="cursor:pointer" class="text-primary" onclick="">#</u></td>
+                                <td ><img src="#" width="50" height="50" alt=""></td>
+                                <td width="100px">#</td>
+                                <td width="100px">#</td>
+                                <td width="100px">#</td>
+                                <td width="180px">#</td>
                                 <td class="text-l">通过</td>
                                 <td class="td-status"><span class="label label-success radius">已启用</span></td>
                                 <td class="td-manage">
                                     <a onClick="member_stop(this,'10001')" href="javascript:;" title="停用" class="btn btn-xs btn-success"><i
                                             class="icon-ok bigger-120"></i></a>
-                                    <a title="编辑" onclick="member_edit('编辑','/member_add/','{{$v->id}}','','510')" href="javascript:;"
+                                    <a title="编辑" onclick="member_edit('编辑','/member_add/','#','','510')" href="javascript:;"
                                         class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
-                                    <a title="删除" href="javascript:;" onclick="member_del(this,'{{$v->id}}')" class="btn btn-xs btn-warning"><i
+                                    <a title="删除" href="javascript:;" onclick="member_del(this,'#')" class="btn btn-xs btn-warning"><i
                                             class="icon-trash  bigger-120"></i></a>
                                 </td>
                             </tr>
-                          @endforeach
+                          {{-- @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -133,10 +133,10 @@
 
     // })
 
-    if("{{session('errors')}}") 
-    {
-        layer_close(parent.window.location.href="{{route('Products_List')}}")
-    }
+    // if("{{session('errors')}}") 
+    // {
+    //     layer_close(parent.window.location.href="{{route('Products_List')}}")
+    // }
 
     jQuery(function ($) {
         var oTable1 = $('#sample-table').dataTable({
@@ -294,11 +294,11 @@
         layer.confirm('确认要删除吗？', function (index) {
             $(obj).parents("tr").remove();
             layer.msg('已删除!', { icon: 1, time: 1000 });
-            $.ajax({
-                type:'POST',
-                url:'{{route("delproducts_List")}}',
-                data:{id:id,_token:"{{csrf_token()}}"},
-            })
+            // $.ajax({
+            //     type:'POST',
+            //     url:'{{route("delproducts_List")}}',
+            //     data:{id:id,_token:"{{csrf_token()}}"},
+            // })
         });
     }
     //面包屑返回值

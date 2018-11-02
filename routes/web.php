@@ -48,6 +48,10 @@ Route::get('/Brand_Manage','ProductController@Brand_Manage')->name('Brand_Manage
 //品牌修改
 Route::get('/Add_Brand_update/{id}','ProductController@Add_Brand_update')->name('Add_Brand_update');
 Route::post('/doAdd_Brand_update/{id}','ProductController@doAdd_Brand_update')->name('doAdd_Brand_update');
+//品牌删除
+Route::post('/delAdd_Brand_update','ProductController@delAdd_Brand_update')->name('delAdd_Brand_update');
+
+
 
 
 //分类管理

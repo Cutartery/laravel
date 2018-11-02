@@ -98,7 +98,7 @@
                                     <a title="编辑" onclick="member_edit('编辑','/Add_Brand_update/','{{$v->id}}','','510')" href="javascript:;" class="btn btn-xs btn-info">
                                         <i class="icon-edit bigger-120"></i>
                                     </a>
-                                    <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="btn btn-xs btn-warning">
+                                    <a title="删除" href="javascript:;" onclick="member_del(this,'{{$v->id}}')" class="btn btn-xs btn-warning">
                                         <i class="icon-trash  bigger-120"></i>
                                     </a>
                                 </td>
@@ -116,6 +116,10 @@
 
 </html>
 <script>
+    if("{{session('errors')}}") 
+    {
+        layer_close(parent.window.location.href="{{route('Brand_Manage')}}")
+    }
 
     jQuery(function ($) {
         var oTable1 = $('#sample-table').dataTable({
@@ -227,6 +231,11 @@
         layer.confirm('确认要删除吗？', function (index) {
             $(obj).parents("tr").remove();
             layer.msg('已删除!', { icon: 1, time: 1000 });
+            $.ajax({
+                type:'post',
+                url:'{{route("delAdd_Brand_update")}}',
+                data:{id:id,_token:"{{csrf_token()}}"}
+            })
         });
     }
     laydate({

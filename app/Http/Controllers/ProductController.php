@@ -12,72 +12,49 @@ use Storage;
 
 class ProductController extends Controller
 {
+    //添加商品页面显示
+    public function picture_add(){
+        return view('index.picture_add');
+    }
+    public function dopicture_add(Request $req)//页面传来数据
+    {
+
+    }
     //添加完显示页面
     public function Products_List()
     {
-        $product = new Product;
-        $data = $product->doproducts_List();
-        return view('product.products_List',
-        ['data' => $data]);
+
+        return view('product.products_List');
     }
     //产品删除
     public function delproducts_List(Request $req)
     {
-       return Product::where('id',$req->id)->delete();
+ 
     }
     //产品批量删除
     public function delproducts_Lists(Request $req)
     {
-       $aa = Product::del_goods($req->die);
-       return redirect()->route('Products_List');
+
     }
     //产品添加传输数据
     public function member_add($id)
     {
-        $product = new Product;
-        $data = $product->member_add($id);
-        return view('product.member_add',
-        ['data' => $data]);
+
+        return view('product.member_add');
     }
     //产品添加
     public function domember_add(Request $req)
     {
-        // dd($req->all());
-        $product = new Product;
-        $product->fill($req->all());
-        $arr = [];
-        // 如果没有修改图片
-        if(isset($req->file)){
-             // 删除原有图片
-             Storage::disk('lms')->delete($req->img);
-            $product->file ='/upload/'.$req->file->store('product/'.date('Ymd'));
-            
-            $arr = ['file' => $product->file];
-        }
-        $arr += [
-            "img_title" => $req->img_title,
-            "titles" => $req->titles,
-            "number" => $req->number,
-            "place" => $req->place,
-            "material" => $req->material,
-            "brand" => $req->brand,
-            "height" => $req->height,
-            "zprice" => $req->zprice,
-            "sprice" => $req->sprice,
-            "keyword" => $req->keyword,
-            "content" => $req->content,
-        ];
-        $aa = Product::where('id','=',$req->id)->update($arr);
-        if($aa==true)
-        {
-            return redirect()->route('Products_List')->with('errors','123');
-        }
-        else
-        {
-            return back();
-        }
+
     }
  
+
+
+
+
+
+
+
     //向页面传数据分类添加
     public function product_category_add()
     {
@@ -177,22 +154,26 @@ class ProductController extends Controller
     //品牌添加处理
     public function doAdd_Brand(Request $req)
     {
+        // dd($req->all());
         $brand = new Brand;
         $brand->fill($req->all());
         
         if($req->hasFile('brand_logo') && $req->file('brand_logo')->isValid()){
             $brand->brand_logo ='/upload/'.$req->brand_logo->store('brand/'.date('Ymd'));
         }
-        $aa = $brand->save();
+        $brand->save();
         $b_id = $brand->id;
-
+        if(!isset($req->die))
+        {
+            die('请选择分类');
+        }
         foreach($req->die as $v){
             $bran_ify = new bran_ify;
 
             $bran_ify->brand_id = $b_id;
             $bran_ify->ify_id = $v;
 
-            $bran_ify->save();
+           $aa = $bran_ify->save();
         }
         if($aa == true)
         {
@@ -227,7 +208,7 @@ class ProductController extends Controller
             'type' => $arr
         ]);
     }
-
+    //执行品牌修改
     public function doAdd_Brand_update(Request $req,$id)
     {
         $brand = new Brand;
@@ -249,11 +230,27 @@ class ProductController extends Controller
         bran_ify::where('brand_id',$id)->delete();
         foreach($req->die as $v)
         {
-            bran_ify::insert([
+           $aa = bran_ify::insert([
                 'brand_id' => $id,
                 'ify_id' => $v
             ]);
         }
+        if($aa==true)
+        {
+            return redirect()->route('Brand_Manage')->with('errors','345');
+        }
+        else
+        {
+            return back();
+        }
+    }
+    public function delAdd_Brand_update(Request $req)
+    {
+        // dd($req->all());
+       $logo = brand::where('id',$req->id)->first();
+        Storage::disk('lms')->delete($logo->brand_logo);
+        Brand::where('id',$req->id)->delete();
+        bran_ify::where('brand_id',$req->id)->delete();
     }
     public function Category_Manage(){
         return view('product.Category_Manage');
@@ -266,21 +263,5 @@ class ProductController extends Controller
     {
         return view('product.member_show');
     }
-    //添加商品页面显示
-    public function picture_add(){
-        return view('index.picture_add');
-    }
-    public function dopicture_add(Request $req)//页面传来数据
-    {
-        $product = new Product;
-        $product->fill($req->all());
-        if($req->hasFile('file') && $req->file('file')->isValid()){
-            $product->file ='/upload/'.$req->file->store('product/'.date('Ymd'));
-        }
-        $aa = $product->save();
-        if($aa == true)
-        {
-            return redirect()->route('Products_List');
-        }
-    }
+
 }
