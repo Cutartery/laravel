@@ -25,6 +25,59 @@
     <link href="Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 
     <title>新增图片</title>
+    <style>
+        .qwer {  
+            width: 200px;  
+            padding:8px;  
+            background-color: #428bca;  
+            border-color: #357ebd;
+            margin:0px 41%;  
+            color: #fff;  
+            -moz-border-radius: 10px;  
+            -webkit-border-radius: 10px;  
+            border-radius: 10px; /* future proofing */  
+            -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+            text-align: center;  
+            vertical-align: middle;  
+            border: 1px solid transparent;  
+            font-weight: 900;  
+            font-size:125%  
+      }
+        .swer {  
+            width: 200px;  
+            margin-top: 10px !important ; 
+            padding:8px;  
+            background-color: #FFA488;  
+            border-color: #357ebd;
+            margin:0px 39%;  
+            color: #fff;  
+            -moz-border-radius: 10px;  
+            -webkit-border-radius: 10px;  
+            border-radius: 10px; /* future proofing */  
+            -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+            text-align: center;  
+            vertical-align: middle;  
+            border: 1px solid transparent;  
+            font-weight: 900;  
+            font-size:125%  
+      }
+        .wer {  
+            width: 120px;  
+            padding:8px;  
+            background-color: #33FFAA;  
+            border-color: #357ebd;
+            color: #fff;  
+            -moz-border-radius: 10px;  
+            -webkit-border-radius: 10px;  
+            border-radius: 10px; /* future proofing */  
+            -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+            text-align: center;  
+            vertical-align: middle;  
+            border: 1px solid transparent;  
+            font-weight: 900;  
+            font-size:125%  
+      }
+    </style>
 </head>
 
 <body>
@@ -56,44 +109,35 @@
 
                 <div class=" clearfix cl">
                     <div class="Add_p_s">
-                        <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""         id="" name="brand"></div>
-                    </div>
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">产&nbsp;&nbsp;&nbsp;&nbsp;地：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="place"></div>
-                    </div>
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">材&nbsp;&nbsp;&nbsp;&nbsp;质：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="material"></div>
-                    </div>
-
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">产品重量：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="height">kg</div>
-                    </div>
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">展示价格：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="zprice">元</div>
-                    </div>
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">市场价格：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="sprice">元</div>
-                    </div>
-
-
+                        <label class="form-label col-2">分&nbsp;&nbsp;&nbsp;&nbsp;类：</label>
+                        <div class="formControls col-2" style="width:400px;">
+                                <select name="" id="select1">
+                                    @foreach ($data as $v)
+                                        <option value="{{$v->id}}">{{$v->ify_name}}</option>
+                                     @endforeach
+                                </select>
+                                <select name="" id="select2"></select>
+                                <select name="" id="select3"></select>
+                               
+                        </div>
+                    </div> 
                 </div>
+                <div class=" clearfix cl">
+                    <div class="Add_p_s">
+                        <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>
+                        <div class="formControls col-2" style="width:400px;">
+                            <select name="" id="">
+                                <option value="">清玄子儿</option>
+                            </select>
+                            <select name="" id="">
+                                <option value="">清玄子儿</option>
+                            </select>
+                            <select name="" id="">
+                                <option value="">清玄子儿</option>
+                            </select>
+                        </div>
+                    </div> 
 
-                <div class="clearfix cl">
-                    <label class="form-label col-2">关键词：</label>
-                    <div class="formControls col-10">
-                        <input type="text" class="input-text" value="" placeholder="" id="" name="keyword">
-                    </div>
                 </div>
                 <div class="clearfix cl">
                     <label class="form-label col-2">内容摘要：</label>
@@ -103,27 +147,37 @@
                         <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
                     </div>
                 </div>
-                <div class="clearfix cl">
-                    <label class="form-label col-2">图片上传：</label>
-                    <input type="file" class="image" name="file" id="">
-                </div>
-                <div class="clearfix cl">
-                    <label class="form-label col-2">详细内容：</label>
-                    <div class="formControls col-10">
-                        <script id="editor" name="scontent" type="text/plain" style="width:100%;height:400px;"></script>
+
+
+                <input type="button" class="qwer" value="添加一组sku">
+
+                <div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
+                    <div style="height:50px;">
+                        <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                    </div>
+                    <div style="height:50px;">
+                        <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                    </div>
+                    <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
+                    <div style="width:100%;" id="lms">
+                        <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+                            <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
+                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                        </div>
+                        <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+                            <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
+                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                        </div>
+                        <input type="button" class="wer" value="添加一个sku">
                     </div>
                 </div>
-                <!-- <div class="clearfix cl">
-                    <label class="form-label col-2">允许评论：</label>
-                    <div class="formControls col-2 skin-minimal">
-                        <div class="check-box" style=" margin-top:9px"><input type="checkbox" id="checkbox-1"><label
-                        for="checkbox-1">&nbsp;</label></div>
-                    </div>
-                </div> -->
+
+
                 <div class="clearfix cl">
                     <div class="Button_operation">
-                        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="icon-save "></i>保存并提交审核</button>
-                        <button onClick="article_save();" class="btn btn-secondary  btn-warning" type="button"><i class="icon-save"></i>保存草稿</button>
+                        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
                         <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
                     </div>
                 </div>
@@ -148,6 +202,109 @@
     <script type="text/javascript" src="js/H-ui.js"></script>
     <script type="text/javascript" src="js/H-ui.admin.js"></script>
     <script>
+    
+    $('.qwer').click(function(){
+       var str = 
+        `<div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
+            <div style="height:50px;">
+                <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+            </div>
+            <div style="height:50px;">
+                <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+            </div>
+            <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
+            <div style="width:100%;" id="lms">
+                <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+                    <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                </div>
+                <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+                    <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                </div>
+                <input type="button" class="wer" onclick="add_val(event)" value="添加一个sku">
+            </div>
+        </div>`;
+        // $(this).append(str);
+        var model = document.querySelector('#model')
+        model.insertAdjacentHTML('afterEnd',str);
+    })
+    
+    function add_sku(event){
+        var html =`
+        <div style="width:100%;">
+            <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+                <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+            </div>
+            <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+                <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+            </div>
+            <input type="button" class="wer" value="添加一个sku">
+        </div>
+        `;
+        var lms = document.querySelector('#lms');
+        lms.insertAdjacentHTML('afterEnd',"<hr>"+html)
+
+    }
+
+    function add_val(event){
+        var str = `
+        <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+            <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
+            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+        </div>
+        `;
+
+    }
+    $('#select1').change(function(){
+        var id = $(this).val();
+        if(id!=''){
+            $.ajax({
+                type:'post',
+                url:"{{route('ajaxpicture_add')}}",
+                datdtype:"json",
+                data:{id:id,_token:"{{csrf_token()}}"},
+                success:function(a)
+                {
+                    // console.log(a);
+                    var str = '';
+                    for(var i=0;i<a.length;i++)
+                    {
+                      str = "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
+                    }
+                    $("#select2").html(str);
+                    $("#select2").trigger("change");
+                }
+            })
+        }
+    })
+    $('#select2').change(function(){
+        var id = $(this).val();
+        if(id!=''){
+            $.ajax({
+                type:'post',
+                url:"{{route('ajaxpicture_add')}}",
+                datdtype:"json",
+                data:{id:id,_token:"{{csrf_token()}}"},
+                success:function(a)
+                {
+                    var str = '';
+                    for(var i=0;i<a.length;i++)
+                    {
+                      str = "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
+                    }
+                    $("#select3").html(str);
+                    $("#select3").trigger("change");
+                }
+            })
+        }
+    })
+
+
 
     function getObjectUrl(file) {
     var url = null;

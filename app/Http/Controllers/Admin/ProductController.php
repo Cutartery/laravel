@@ -14,8 +14,20 @@ class ProductController extends Controller
 {
     //添加商品页面显示
     public function picture_add(){
-        return view('admin.index.picture_add');
+
+        $classify = new classify;
+        $data = $classify->picture_add();
+        // dd($data);
+        return view('admin.index.picture_add',['data' => $data]);
     }
+    public function ajaxpicture_add(Request $req){
+        // dd($req->all());
+        $classify = new classify;
+        $data = $classify->ajaxpicture_add($req);
+        // dd($data);
+        return $data;
+    }
+
     public function dopicture_add(Request $req)//页面传来数据
     {
 

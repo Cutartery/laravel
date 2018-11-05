@@ -17,10 +17,8 @@ class CreateTableProduct extends Migration
             $table->increments('id');
             $table->string('pro_name')->comment('商品名称');
             $table->unsignedInteger('brand_id')->comment('品牌ID');
+            $table->unsignedInteger('ify_id')->comment('分类id');
             $table->string('pro_content',200)->comment('产品描述');
-            $table->unsignedInteger('pro_ify_one')->comment('分类一');
-            $table->unsignedInteger('pro_ify_two')->comment('分类二');
-            $table->unsignedInteger('pro_ify_three')->comment('分类三');
             $table->timestamps();
             $table->comment='产品基本信息表';
         });

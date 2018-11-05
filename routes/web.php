@@ -38,6 +38,12 @@ Route::post('/domember_add/{id}','Admin\ProductController@domember_add')->name('
 //商品添加
 Route::get('/picture_add','Admin\ProductController@picture_add')->name('picture_add');
 Route::post('/dopicture_add','Admin\ProductController@dopicture_add')->name('dopicture_add');
+//商品添加分类ajax
+Route::post('/ajaxpicture_add','Admin\ProductController@ajaxpicture_add')->name('ajaxpicture_add');
+
+
+
+
 
 //品牌管理
 //品牌添加
