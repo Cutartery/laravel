@@ -50,21 +50,14 @@
             <form action="{{route('dopicture_add')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
                 @csrf
                 <div class="clearfix cl">
-                    <label class="form-label col-2"><span class="c-red">*</span>图片标题：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id=""
-                            name="img_title"></div>
+                    <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
                 </div>
-                <div class=" clearfix cl">
-                    <label class="form-label col-2">简略标题：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id=""
-                            name="titles"></div>
-                </div>
-                <div class=" clearfix cl">
 
+                <div class=" clearfix cl">
                     <div class="Add_p_s">
-                        <label class="form-label col-2">产品编号：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="number"></div>
+                        <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>
+                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""         id="" name="brand"></div>
                     </div>
                     <div class="Add_p_s">
                         <label class="form-label col-2">产&nbsp;&nbsp;&nbsp;&nbsp;地：</label>
@@ -76,11 +69,7 @@
                         <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
                                 id="" name="material"></div>
                     </div>
-                    <div class="Add_p_s">
-                        <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>
-                        <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
-                                id="" name="brand"></div>
-                    </div>
+
                     <div class="Add_p_s">
                         <label class="form-label col-2">产品重量：</label>
                         <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder=""
