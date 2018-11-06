@@ -24,7 +24,7 @@
     <link href="Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
     <link href="Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 
-    <title>新增图片</title>
+    <title>商品添加</title>
     <style>
         .qwer {  
             width: 200px;  
@@ -61,22 +61,7 @@
             font-weight: 900;  
             font-size:125%  
       }
-        .wer {  
-            width: 120px;  
-            padding:8px;  
-            background-color: #33FFAA;  
-            border-color: #357ebd;
-            color: #fff;  
-            -moz-border-radius: 10px;  
-            -webkit-border-radius: 10px;  
-            border-radius: 10px; /* future proofing */  
-            -khtml-border-radius: 10px; /* for old Konqueror browsers */  
-            text-align: center;  
-            vertical-align: middle;  
-            border: 1px solid transparent;  
-            font-weight: 900;  
-            font-size:125%  
-      }
+
     </style>
 </head>
 
@@ -104,7 +89,7 @@
                 @csrf
                 <div class="clearfix cl">
                     <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_name"></div>
                 </div>
 
                 <div class=" clearfix cl">
@@ -112,12 +97,13 @@
                         <label class="form-label col-2">分&nbsp;&nbsp;&nbsp;&nbsp;类：</label>
                         <div class="formControls col-2" style="width:400px;">
                                 <select name="" id="select1">
+                                    <option value="">请选择...</option>
                                     @foreach ($data as $v)
                                         <option value="{{$v->id}}">{{$v->ify_name}}</option>
                                      @endforeach
                                 </select>
                                 <select name="" id="select2"></select>
-                                <select name="" id="select3"></select>
+                                <select name="ify_id" id="select3"></select>
                                
                         </div>
                     </div> 
@@ -126,14 +112,8 @@
                     <div class="Add_p_s">
                         <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>
                         <div class="formControls col-2" style="width:400px;">
-                            <select name="" id="">
-                                <option value="">清玄子儿</option>
-                            </select>
-                            <select name="" id="">
-                                <option value="">清玄子儿</option>
-                            </select>
-                            <select name="" id="">
-                                <option value="">清玄子儿</option>
+                            <select name="brand_id" id="brselect1">
+                                <option value="">不选择..</option>
                             </select>
                         </div>
                     </div> 
@@ -142,7 +122,7 @@
                 <div class="clearfix cl">
                     <label class="form-label col-2">内容摘要：</label>
                     <div class="formControls col-10">
-                        <textarea name="content" cols="" rows="" class="textarea" placeholder="说点什么...最少输入10个字符" datatype="*10-100"
+                        <textarea name="pro_content" cols="" rows="" class="textarea" placeholder="说点什么...最少输入10个字符" datatype="*10-100"
                             dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)"></textarea>
                         <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
                     </div>
@@ -154,28 +134,30 @@
                 <div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
                     <div style="height:50px;">
                         <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
-                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock[]"></div>
                     </div>
                     <div style="height:50px;">
-                        <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
-                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                        <label class="form-label col-2"><span class="c-red">*</span>商品价格：</label>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_price[]"></div>
                     </div>
                     <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
                     <div style="width:100%;" id="lms">
-                        <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+                        <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                             <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
                         </div>
-                        <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+                        <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                             <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
                         </div>
-                        <input type="button" class="wer" value="添加一个sku">
+                        <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
+                            <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                            <input type="file" class="image" name="image[]" value="上传图片">
+                        </div>
                     </div>
+                    
                 </div>
-
-
-                <div class="clearfix cl">
+                <div class="clearfix cl" id="tj">
                     <div class="Button_operation">
                         <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
                         <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
@@ -208,59 +190,77 @@
         `<div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
             <div style="height:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock[]"></div>
             </div>
             <div style="height:50px;">
-                <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                <label class="form-label col-2"><span class="c-red">*</span>商品价格：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_price[]"></div>
             </div>
             <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
             <div style="width:100%;" id="lms">
-                <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+                <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                     <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
                 </div>
-                <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+                <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                     <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
                 </div>
-                <input type="button" class="wer" onclick="add_val(event)" value="添加一个sku">
+                <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
+                    <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                    <input type="file" class="image" name="image[]" value="上传图片">
+                </div>
             </div>
         </div>`;
         // $(this).append(str);
-        var model = document.querySelector('#model')
-        model.insertAdjacentHTML('afterEnd',str);
+        var model = document.querySelector('#tj')
+        model.insertAdjacentHTML('beforeBegin',str);
+           $(".image").change(function(){
+        // 获取选择的图片
+        var file = this.files[0];
+        // 转成字符串
+        var str = getObjectUrl(file);
+        // 先删除上一个
+        $(this).prev('.img_preview').remove();
+        // 在框的前面放一个图片
+        $(this).before("<div class='img_preview'><img src='"+str+"' width='120' height='auto'></div>");
+    });
     })
     
     function add_sku(event){
         var html =`
         <div style="width:100%;">
-            <div style="height:50px;width:100px;display:inline-block;margin-right:300px;">
+            <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
             </div>
-            <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
+            <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
             </div>
-            <input type="button" class="wer" value="添加一个sku">
+            <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
+                <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                <input type="file" class="image" name="image[]" value="上传图片">
+            </div>
         </div>
         `;
-        var lms = document.querySelector('#lms');
-        lms.insertAdjacentHTML('afterEnd',"<hr>"+html)
+        var lms = event.path[1];
+        lms.insertAdjacentHTML('beforeEnd',"<hr>"+html)
+        $(".image").change(function(){
+        // 获取选择的图片
+        var file = this.files[0];
+        // 转成字符串
+        var str = getObjectUrl(file);
+        // 先删除上一个
+        $(this).prev('.img_preview').remove();
+        // 在框的前面放一个图片
+        $(this).before("<div class='img_preview'><img src='"+str+"' width='120' height='auto'></div>");
+    });
 
     }
 
-    function add_val(event){
-        var str = `
-        <div  style="height:50px;width:120px;display:inline-block;margin-right:300px;">
-            <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="img_title"></div>
-        </div>
-        `;
-
-    }
     $('#select1').change(function(){
+        // console.log(123456)
         var id = $(this).val();
         if(id!=''){
             $.ajax({
@@ -270,11 +270,11 @@
                 data:{id:id,_token:"{{csrf_token()}}"},
                 success:function(a)
                 {
-                    // console.log(a);
+                    console.log(a);
                     var str = '';
                     for(var i=0;i<a.length;i++)
                     {
-                      str = "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
+                      str += "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
                     }
                     $("#select2").html(str);
                     $("#select2").trigger("change");
@@ -295,10 +295,31 @@
                     var str = '';
                     for(var i=0;i<a.length;i++)
                     {
-                      str = "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
+                      str += "<option selected='selected' value="+a[i].id+">"+a[i].ify_name+"</option>" ;
                     }
                     $("#select3").html(str);
                     $("#select3").trigger("change");
+                }
+            })
+        }
+    })
+    $('#select3').change(function(){
+        var id = $(this).val();
+        if(id!=''){
+            $.ajax({
+                type:'post',
+                url:"{{route('ajaxbrpicture_add')}}",
+                datdtype:"json",
+                data:{id:id,_token:"{{csrf_token()}}"},
+                success:function(a)
+                {
+                    var str = '';
+                    for(var i=0;i<a.length;i++)
+                    {
+                      str += "<option selected='selected' value="+a[i].id+">"+a[i].brand_name+"</option>" ;
+                    }
+                    $("#brselect1").html(str);
+                    $("#brselect1").trigger("change");
                 }
             })
         }

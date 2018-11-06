@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['img_title','titles','number','place','material','brand','height','zprice','sprice','keyword','content','file','scontent','img'];
+    protected $fillable = ['pro_name','brand_id','ify_id','pro_content'];
 
     //页面显示商品添加
     public function doproducts_List()
@@ -26,5 +26,6 @@ class Product extends Model
             Product::destroy($v);
         }
     }
+
 
 }

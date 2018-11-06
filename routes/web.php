@@ -40,6 +40,8 @@ Route::get('/picture_add','Admin\ProductController@picture_add')->name('picture_
 Route::post('/dopicture_add','Admin\ProductController@dopicture_add')->name('dopicture_add');
 //商品添加分类ajax
 Route::post('/ajaxpicture_add','Admin\ProductController@ajaxpicture_add')->name('ajaxpicture_add');
+//商品添加品牌ajax
+Route::post('/ajaxbrpicture_add','Admin\ProductController@ajaxbrpicture_add')->name('ajaxbrpicture_add');
 
 
 

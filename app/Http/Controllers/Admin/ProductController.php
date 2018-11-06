@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Product;
 use App\Models\Admin\Brand;
 use App\Models\Admin\classify;
 use App\Models\Admin\bran_ify;
+use App\Models\Admin\sku;
 use Storage;
 
 
@@ -20,6 +22,7 @@ class ProductController extends Controller
         // dd($data);
         return view('admin.index.picture_add',['data' => $data]);
     }
+    //商品添加分类ajax
     public function ajaxpicture_add(Request $req){
         // dd($req->all());
         $classify = new classify;
@@ -27,9 +30,34 @@ class ProductController extends Controller
         // dd($data);
         return $data;
     }
+    //商品添加品牌ajax
+    public function ajaxbrpicture_add(Request $req){
+        // dd($req->all());
+        $bran_ify = new bran_ify;
+        $data = $bran_ify->ajaxbrpicture_add($req);
+        // dd($data);
+        return $data;
+    }
 
     public function dopicture_add(Request $req)//页面传来数据
     {
+        dd($req->all());
+        $product = new Product;
+        $product->fill($req->all());
+        $product->save();
+        $id = DB::getPdo()->lastInsertId();
+        // dd($id);
+        $data = $req->all();
+        
+        foreach($data['sku_stock'] as $k => $v)
+        {
+            $skus = new sku;
+            $sku = [];
+            $sku['sku_stock']=$v;
+            $sku['sku_price']=$data['sku_price'][$k];   
+            $sku['pro_id'] = $id;   
+            $skus->save();
+        }
 
     }
     //添加完显示页面

@@ -19,4 +19,14 @@ class bran_ify extends Model
         
         return $data;
     }
+    public function ajaxbrpicture_add($req)
+    {
+        $data = DB::table('bran_ifies as bi')
+        ->join("brands as br","br.id","=","bi.brand_id")
+        ->join("classifies as if","if.id","=","bi.ify_id")
+        ->where("if.id",$req->id)
+        ->select('br.id','br.brand_name')
+        ->get();
+        return $data;
+    }
 }

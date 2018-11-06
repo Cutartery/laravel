@@ -15,6 +15,7 @@ class CreateAttributesTable extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('pro_id')->comment('商品id');
             $table->string('attr_attr')->comment('attr属性名');
             $table->string('attr_val')->comment('attr属性值');
             $table->comment='属性表';
