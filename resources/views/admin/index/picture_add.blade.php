@@ -151,7 +151,7 @@
                             <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
                         </div>
                         <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                            <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                            <label class="form-label col-2"><span class="c-red">*</span>图片上传:</label>
                             <input type="file" class="image" name="image[]" value="上传图片">
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                     <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
                 </div>
                 <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                    <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                    <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
                     <input type="file" class="image" name="image[]" value="上传图片">
                 </div>
             </div>
@@ -239,7 +239,7 @@
                 <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
             </div>
             <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
+                <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
                 <input type="file" class="image" name="image[]" value="上传图片">
             </div>
         </div>

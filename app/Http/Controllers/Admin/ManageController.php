@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Admin;
+
 class ManageController extends Controller
 {
     public function admin_Competence(){
@@ -16,7 +18,9 @@ class ManageController extends Controller
         return view('admin.manage.admin_info');
     }
     public function Competence(){
-        return view('admin.manage.Competence');
+        
+        $data = Admin::get();
+        return view('admin.manage.Competence',['data' => $data]);
     }
 
 }

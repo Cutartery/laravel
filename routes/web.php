@@ -10,11 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'sign'], function(){});
-
 //登录
 Route::get('/','Admin\AdminController@user')->name('user');
 Route::post('/douser','Admin\AdminController@douser')->name('douser');
+
+
+Route::group(['middleware' => 'sign'], function(){
+
+
 //主页系统首页
 Route::get('/index','Admin\IndexController@index')->name('index');
 Route::get('/home','Admin\IndexController@home')->name('home');
@@ -127,5 +130,7 @@ Route::get('/System_Logs','Admin\SystemController@System_Logs')->name('System_Lo
 Route::get('/admin_Competence','Admin\ManageController@admin_Competence')->name('admin_Competence');
 Route::get('/administrator','Admin\ManageController@administrator')->name('administrator');
 Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info');
+//添加权限
 Route::get('/Competence','Admin\ManageController@Competence')->name('Competence');
 
+});

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Images;
+use File;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,6 +11,9 @@ use App\Models\Admin\Brand;
 use App\Models\Admin\classify;
 use App\Models\Admin\bran_ify;
 use App\Models\Admin\sku;
+use App\Models\Admin\attribute;
+use App\Models\Admin\image;
+use Intervention\Image\ImageManager;
 use Storage;
 
 
@@ -41,24 +46,76 @@ class ProductController extends Controller
 
     public function dopicture_add(Request $req)//页面传来数据
     {
-        dd($req->all());
         $product = new Product;
         $product->fill($req->all());
         $product->save();
+
         $id = DB::getPdo()->lastInsertId();
-        // dd($id);
         $data = $req->all();
-        
         foreach($data['sku_stock'] as $k => $v)
         {
             $skus = new sku;
             $sku = [];
             $sku['sku_stock']=$v;
             $sku['sku_price']=$data['sku_price'][$k];   
-            $sku['pro_id'] = $id;   
+            $sku['pro_id'] = $id;
+            $skus->fill($sku);  
             $skus->save();
         }
 
+        $date = date("Ymd");
+        $path = "./uploads/thumbnail/$date";
+        if (!file_exists($path)) {
+            File::makeDirectory($path, 0777, true, true);
+        }
+
+        
+        foreach($data['attr_attr'] as $k => $v)
+        {
+            $image_id = "";
+
+            if(isset($data['image'][$k]))
+            {
+                
+                $image_logo = new image;
+                $imagepath = $data['image'][$k]->path();
+                
+                $img = Images::make($imagepath);
+                
+                $sm_path = 'thumbnail/'.$date.'/sm_'.md5(time()).$_FILES['image']['name'][$k];
+                $img->resize(80,80);
+                $img->save('./uploads/'.$sm_path);
+                
+                $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$_FILES['image']['name'][$k];
+                $img->resize(150,150);
+                $img->save('./uploads/'.$md_path);
+    
+                $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$_FILES['image']['name'][$k];
+                $img->resize(200,200);
+                $img->save('./uploads/'.$bg_path);
+    
+                $image_logo->pro_id = $id;
+                $image_logo->sm_image = $sm_path;
+                $image_logo->md_image = $md_path;
+                $image_logo->bg_image = $bg_path;
+                
+                $image_logo->save();
+                $image_id = $image_logo->id;
+            }
+            
+            $attr = new attribute;
+            $attrs = [];
+            $attrs['attr_attr'] = $v;
+            $attrs['attr_val'] = $data['attr_val'][$k];
+            $attrs['pro_id'] = $id;
+            $attrs['image_id'] = $image_id;
+            $attr->fill($attrs);
+            $aa = $attr->save();
+        }
+        if($aa == true)
+        {
+            return redirect()->route('Products_List');
+        }
     }
     //添加完显示页面
     public function Products_List()

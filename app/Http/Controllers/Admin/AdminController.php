@@ -21,9 +21,15 @@ class AdminController extends Controller
         }
         else
         {
-            session(['username' => $req->username]);
+            $url = $admin->gitpri($data->id);
+            session(['username' => $req->username,'user' => $url]);
             // return session()->all();
            return redirect()->route('index');
         }
+
+    }
+    public function admin()
+    {
+
     }
 }
