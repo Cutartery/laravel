@@ -132,5 +132,6 @@ Route::get('/administrator','Admin\ManageController@administrator')->name('admin
 Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info');
 //添加权限
 Route::get('/Competence','Admin\ManageController@Competence')->name('Competence');
+Route::post('/doCompetence','Admin\ManageController@doCompetence')->name('doCompetence');
 
 });
