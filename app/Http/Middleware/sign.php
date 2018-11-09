@@ -17,11 +17,19 @@ class sign
     {
         // echo 1;
         $empty = session('user');
-        $path = explode("?",\Request::getRequestUri())[0];
-        if(in_array($path,$empty) || $empty[0] == 'all' ){
-            return $next($request);
-        }else{
-            die('没有权限!');
+
+        if(isset($empty)){
+            $path = explode("?",\Request::getRequestUri())[0];
+            if(in_array($path,$empty) || $empty[0] == 'all' ){
+                return $next($request);
+            }else{
+                die('没有权限!');
+            }
         }
+        else
+        {
+            return redirect()->route('user');
+        }
+
     }
 }

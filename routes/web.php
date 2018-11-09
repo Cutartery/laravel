@@ -13,14 +13,14 @@
 //登录
 Route::get('/','Admin\AdminController@user')->name('user');
 Route::post('/douser','Admin\AdminController@douser')->name('douser');
+Route::get('/index','Admin\IndexController@index')->name('index');
 
+Route::get('/home','Admin\IndexController@home')->name('home');
 
 Route::group(['middleware' => 'sign'], function(){
 
 
 //主页系统首页
-Route::get('/index','Admin\IndexController@index')->name('index');
-Route::get('/home','Admin\IndexController@home')->name('home');
 
 
 
@@ -133,5 +133,7 @@ Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info'
 //添加权限
 Route::get('/Competence','Admin\ManageController@Competence')->name('Competence');
 Route::post('/doCompetence','Admin\ManageController@doCompetence')->name('doCompetence');
+Route::get('/Competence_update','Admin\ManageController@Competence_update')->name('Competence_update');  //修改
+
 
 });

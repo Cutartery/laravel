@@ -28,5 +28,27 @@ class Admin extends Model
         }
         return $url;
     }
+    public function admin_Competence()
+    {
+        $data = DB::table('admins as am')
+            ->join('admin_admin_roles as amro','amro.admin_id','=','am.id')
+            ->join('admin_roles as ades','ades.id','=','amro.role_id')
+            ->groupBy('ades.role_name')
+            ->select('ades.id',DB::raw('GROUP_CONCAT(am.username) username'),'ades.role_name','role_content')
+            ->get();
+        return $data;
+    }  
+    public function Competence_update($id)
+    {
+        $data = DB::table('admin as admin')
+        ->join('admin_admin_roles as adro','adro.admin','=','admin.id')
+        ->join('admin_roles as aos','aos.id','=','adro.role_id')
+        ->join('admin_role_privleges as pri','pri.role_id','=','aos.id')
+        ->join('admin_privileges as ges','ges.id','=','pri.pri_id')
+        ->where('aos.id',$id)
+        ->get();
+        dd($data);
+    }
+    
 
 }
