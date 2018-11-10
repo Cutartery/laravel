@@ -40,14 +40,15 @@ class Admin extends Model
     }  
     public function Competence_update($id)
     {
-        $data = DB::table('admin as admin')
-        ->join('admin_admin_roles as adro','adro.admin','=','admin.id')
+        $data = DB::table('admins as admin')
+        ->join('admin_admin_roles as adro','adro.admin_id','=','admin.id')
         ->join('admin_roles as aos','aos.id','=','adro.role_id')
         ->join('admin_role_privleges as pri','pri.role_id','=','aos.id')
         ->join('admin_privileges as ges','ges.id','=','pri.pri_id')
         ->where('aos.id',$id)
         ->get();
-        dd($data);
+        
+        return $data;
     }
     
 

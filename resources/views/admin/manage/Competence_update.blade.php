@@ -57,7 +57,7 @@
 										@if($loop->first)
 										@continue
 										@endif
-										<input class="ace" name="admin_id[]" value="{{$v->id}}" type="checkbox" id="id-disable-check">
+										<input class="ace" @if(in_array($v->username , $ijn)) checked @endif name="admin_id[]" value="{{$v->id}}" type="checkbox" id="id-disable-check">
 										<span class="lbl">{{$v->username}}</span>
 								</label>
 							@endforeach

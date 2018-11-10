@@ -20,14 +20,20 @@ class ManageController extends Controller
         return view('admin.manage.admin_Competence',['a' =>$a]);
     }
     //权限修改
-    public function Competence_update(){
-        // dd($_GET);
-
+    public function Competence_update()
+    {
         $role_id = $_GET['id']; 
         $data = Admin::get();
         $asd = new Admin;
-        $asd->Competence_update($role_id);
+        $tub = $asd->Competence_update($role_id);
+        $users = [];
+        foreach($tub as $v)
+        {
+            $users[] = $v->username;
+        }
+        $ijn = array_unique($users);
         $lhq = Admin_privilege::get();
+        dd($tub);
         unset($lhq[0]);
         foreach($lhq as $k => $v)
         {   
@@ -37,7 +43,7 @@ class ManageController extends Controller
                 $a[] = $v;
             }
         }
-        return view('admin.manage.Competence_update',['data' => $data,'lhq' => $a]);
+        return view('admin.manage.Competence_update',['data' => $data,'ijn'=>$ijn,'lhq' => $a]);
     }
     public function administrator(){
         return view('admin.manage.administrator');
