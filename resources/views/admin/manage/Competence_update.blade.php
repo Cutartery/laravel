@@ -36,14 +36,13 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限名称 </label>
 						<div class="col-sm-9">
-							<input type="text" id="form-field-1" placeholder="" name="role_name" class="col-xs-10 col-sm-5">
+							<input type="text" id="form-field-1" placeholder="" value="{{$tub->role_name}}" name="role_name" class="col-xs-10 col-sm-5">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限描述 </label>
 						<div class="col-sm-9">
-							<textarea name="role_content" class="form-control" id="form_textarea" onkeyup="checkLength(this);">
-							</textarea>
+							<textarea name="role_content" class="form-control" id="form_textarea" onkeyup="checkLength(this);">{{$tub->role_content}}</textarea>
 							<span class="wordage">剩余字数：
 								<span id="sy" style="color:Red;">200</span>字
 							</span>
@@ -96,14 +95,14 @@
 								<dl class="cl permission-list2">
 									<dt>
 										<label class="middle">
-										<input type="checkbox" value="{{$v->id}}" class="ace" name="pri_id[] " id="id-disable-check">
+										<input type="checkbox" value="{{$v->id}}" class="ace" @if(in_array($v->id , $atq)) checked @endif name="pri_id[] " id="id-disable-check">
 											<span class="lbl">{{$v->pri_name}}</span>
 										</label>
 									</dt>
 									<dd>
 										@foreach ($v->xd as $a)
 											<label class="middle">
-												<input type="checkbox" value="{{$a->id}}" class="ace" name="pri_id[]" id="user-Character-0-0-0">
+												<input type="checkbox" value="{{$a->id}}" class="ace" @if(in_array($a->id , $atq)) checked @endif name="pri_id[]" id="user-Character-0-0-0">
 												<span class="lbl">{{$a->pri_name}}</span>
 											</label>
 										@endforeach
@@ -175,8 +174,4 @@
 
 		});
 	});
-
-	$("textarea[name=role_content]").html("")
-	
-
 </script>
