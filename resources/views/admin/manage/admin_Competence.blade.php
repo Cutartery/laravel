@@ -38,6 +38,7 @@
 				<thead>
 					<tr>
 						<th class="center"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
+						<th>权限ID</th>
 						<th>权限名称</th>
 						<th>用户名称</th>
 						<th class="hidden-480">描述</th>
@@ -53,12 +54,13 @@
 									<span class="lbl"></span>
 								</label>
 							</td>
+							<td>{{$v->id}}</td>
 							<td>{{$v->role_name}}</td>
 							<td class="hidden-480">{{$v->username}}</td>
 							<td>{{$v->role_content}}</td>
 							<td>
 								<a title="编辑" onclick="Competence_modify('{{$v->id}}')" href="javascript:;" class="btn btn-xs btn-info"><i class="fa fa-edit bigger-120"></i></a>
-								<a title="删除" href="javascript:;" onclick="Competence_del(this,'1')" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
+								<a title="删除" href="javascript:;" onclick="Competence_del(this,'{{$v->id}}')" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
 							</td>
 						</tr>
 					@endforeach
@@ -66,62 +68,27 @@
 			</table>
 		</div>
 	</div>
-	<!--添加权限样式-->
-	<!-- <div id="Competence_add_style" style="display:none">
-   <div class="Competence_add_style">
-     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限名称 </label>
-       <div class="col-sm-9"><input type="text" id="form-field-1" placeholder=""  name="权限名称" class="col-xs-10 col-sm-5"></div>
-	</div>
-     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限说明 </label>
-       <div class="col-sm-9"><textarea name="权限说明" class="form-control" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></div>
-	</div>
-   </div> 
-  </div>-->
 </body>
 
 </html>
 <script type="text/javascript">
-	/*添加权限*/
-	/* $('#Competence_add').on('click', function(){	 
-		 layer.open({
-			type: 1,
-			title: '添加权限',
-			maxmin: true, 
-			shadeClose: false,
-			area : ['800px' , ''],
-			content:$('#Competence_add_style'),
-			btn:['提交','取消'],
-			yes:function(index,layero){	
-			 var num=0;
-			 var str="";
-		 $(".col-sm-9 input[type$='text'],#form_textarea").each(function(n){
-			  if($(this).val()=="")
-			  {
-				   
-				   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
-					title: '提示框',				
-					icon:0,								
-			  }); 
-				num++;
-				return false;            
-			  } 
-			 });
-			  if(num>0){  return false;}	 	
-			  else{
-				  layer.alert('添加成功！',{
-				   title: '提示框',				
-				icon:1,		
-				  });
-				   layer.close(index);	
-			  }		  		     				
-			}
-		});			 
-	 });*/
 	/*权限-删除*/
 	function Competence_del(obj, id) {
 		layer.confirm('确认要删除吗？', function (index) {
-			$(obj).parents("tr").remove();
-			layer.msg('已删除!', { icon: 1, time: 1000 });
+
+			$.ajax({
+				type:"post",
+				url:"{{route('deleteCompetence')}}",
+				data:{id:id,_token:"{{csrf_token()}}"},
+				success:function(data){
+					console.log(data);
+					if(data == 1){
+						$(obj).parents("tr").remove();
+						layer.msg('已删除!', { icon: 1, time: 1000 });
+						layer.close(index);
+					}
+				}
+			})
 		});
 	}
 	/*修改权限*/

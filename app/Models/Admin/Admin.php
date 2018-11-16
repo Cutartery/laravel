@@ -50,6 +50,4 @@ class Admin extends Model
         
         return $data;
     }
-    
-
 }

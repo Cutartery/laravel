@@ -27,16 +27,16 @@
 
 <body>
 	<div class="Competence_add_style clearfix">
-		<form action="{{route('doCompetence')}}" method="post" >
+		<form action="{{route('doCompetence_update')}}" method="post" >
 			@csrf
 			<div class="left_Competence_add">
 				<div class="title_name">添加权限</div>
-				
 				<div class="Competence_add">
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限名称 </label>
 						<div class="col-sm-9">
-							<input type="text" id="form-field-1" placeholder="" value="{{$tub->role_name}}" name="role_name" class="col-xs-10 col-sm-5">
+							<input type="text" id="role_name" value="{{$tub->role_name}}" name="role_name" class="col-xs-10 col-sm-5">
+							<input type="hidden" name="role_id" value="{{$tub->role_id}}">
 						</div>
 					</div>
 					<div class="form-group">
@@ -65,7 +65,7 @@
 					</div>
 					<!--按钮操作-->
 					<div class="Button_operation">
-						<button onclick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="fa fa-save "></i>
+						<button id="buasd" class="btn btn-primary radius" type="submit"><i class="fa fa-save "></i>
 							保存并提交</button>
 						<button onclick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 					</div>
@@ -122,6 +122,11 @@
 
 
 <script type="text/javascript">
+
+	
+	$("#buasd").submit();
+
+
 	//初始化宽度、高度  
 	$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();;
 	$(".Assign_style").width($(window).width() - 500).height($(window).height()).val();
@@ -174,4 +179,20 @@
 
 		});
 	});
+	$('#role_name').change(function(){
+		var rolename = $(this).val();
+		$.ajax({
+			type:"post",
+			url:"{{route('ajaxCompetence')}}",
+			data:{rolename:rolename,_token:"{{csrf_token()}}"},
+			success:function(data){
+				if(data==1)
+				{
+					// console.log(data)
+					alert("角色名已存在!")
+					$("#role_name").val("{{$tub->role_name}}")
+				}
+			}
+		})
+	})
 </script>

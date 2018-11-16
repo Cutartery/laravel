@@ -64,7 +64,47 @@ class ManageController extends Controller
     }
 
     //权限修改接收数据
-    
+    public function doCompetence_update(Request $req)
+    {
+        dd($req->all());
+        Admin_role::where('id',$req->role_id)->update(['role_content'=>$req->role_content,'role_name'=>$req->role_name]);
+        Admin_admin_role::where('role_id',$req->role_id)->delete();
+        foreach($req->admin_id as $v)
+        {
+            $adrole = new Admin_admin_role;
+            $adrole->role_id = $req->role_id;
+            $adrole->admin_id = $v;
+            $adrole->save();
+        }
+        Admin_role_privlege::where('role_id',$req->role_id)->delete();
+        foreach($req->pri_id as $v)
+        {
+            $adpr = new Admin_role_privlege;
+            $adpr->role_id = $req->role_id;
+            $adpr->pri_id = $v;
+            $aa = $adpr->save();
+        }
+        if($aa == true)
+        {
+            return redirect()->route('admin_Competence');
+        }
+
+    }
+    //删除
+    public function deleteCompetence(Request $req)
+    {
+        $role = Admin_role::where('id',$req->id)->delete();
+        if($role)
+        {
+            Admin_admin_role::where('role_id',$req->id)->delete();
+            Admin_role_privlege::where('role_id',$req->id)->delete();
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
     //权限页面传值管理员名字$a
     public function Competence(){
@@ -81,10 +121,19 @@ class ManageController extends Controller
         }
         return view('admin.manage.Competence',['data' => $data,'lhq' => $a]);
     }
+    //ajax修改
+    public function ajaxCompetence(Request $req)
+    {
+        $status = Admin_role::where("role_name",$req->rolename)->first();
+        if($status)
+            return 1;
+        else
+            return 0;
+    }
+
     //权限管理添加
     public function doCompetence(Request $req)
     {
-        // dd($req->all());
         $role = new Admin_role;
         $role->fill($req->all());
         $role->save();

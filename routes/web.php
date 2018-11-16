@@ -133,7 +133,12 @@ Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info'
 //添加权限
 Route::get('/Competence','Admin\ManageController@Competence')->name('Competence');
 Route::post('/doCompetence','Admin\ManageController@doCompetence')->name('doCompetence');
+
 Route::get('/Competence_update','Admin\ManageController@Competence_update')->name('Competence_update');  //修改
+Route::post('/doCompetence_update','Admin\ManageController@doCompetence_update')->name('doCompetence_update');
+Route::post('/ajaxCompetence','Admin\ManageController@ajaxCompetence')->name('ajaxCompetence');//添加修改权限不重复ajax
+Route::post('/deleteCompetence','Admin\ManageController@deleteCompetence')->name('deleteCompetence');//删除
+
 
 
 });

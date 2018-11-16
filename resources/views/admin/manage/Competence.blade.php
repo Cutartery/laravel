@@ -36,7 +36,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限名称 </label>
 						<div class="col-sm-9">
-							<input type="text" id="form-field-1" placeholder="" name="role_name" class="col-xs-10 col-sm-5">
+							<input type="text" id="role_name" placeholder="" name="role_name" class="col-xs-10 col-sm-5">
 						</div>
 					</div>
 					<div class="form-group">
@@ -66,7 +66,7 @@
 					</div>
 					<!--按钮操作-->
 					<div class="Button_operation">
-						<button onclick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="fa fa-save "></i>
+						<button id="asd" class="btn btn-primary radius" type="submit"><i class="fa fa-save "></i>
 							保存并提交</button>
 						<button onclick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 					</div>
@@ -176,6 +176,24 @@
 		});
 	});
 
+	$("#asd").submit();
+
+	$('#role_name').change(function(){
+		var rolename = $(this).val()
+		$.ajax({
+			type:'POST',
+			url:"{{route("ajaxCompetence")}}",
+			data:{rolename:rolename,_token:"{{csrf_token()}}"},
+			success:function(data){
+				if(data==1){
+					// console.log(data)
+					alert("角色已存在")
+					$('#role_name').val("")
+				}
+			}
+		})
+	})
+	
 	$("textarea[name=role_content]").html("")
 	
 
