@@ -6,24 +6,24 @@
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="css/style.css" />
-	<link href="assets/css/codemirror.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/ace.min.css" />
-	<link rel="stylesheet" href="font/css/font-awesome.min.css" />
+	<link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<link href="/assets/css/codemirror.css" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/ace.min.css" />
+	<link rel="stylesheet" href="/font/css/font-awesome.min.css" />
 	<!--[if lte IE 8]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
-	<script src="js/jquery-1.9.1.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
-	<script src="assets/js/typeahead-bs2.min.js"></script>
-	<script src="assets/js/jquery.dataTables.min.js"></script>
-	<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
-	<script src="assets/layer/layer.js" type="text/javascript"></script>
-	<script src="js/lrtk.js" type="text/javascript"></script>
-	<script src="assets/layer/layer.js" type="text/javascript"></script>
-	<script src="assets/laydate/laydate.js" type="text/javascript"></script>
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Widget/Validform/5.3.2/Validform.min.js"></script>
+	<script src="/assets/js/typeahead-bs2.min.js"></script>
+	<script src="/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/js/jquery.dataTables.bootstrap.js"></script>
+	<script src="/assets/layer/layer.js" type="text/javascript"></script>
+	<script src="/js/lrtk.js" type="text/javascript"></script>
+	<script src="/assets/layer/layer.js" type="text/javascript"></script>
+	<script src="/assets/laydate/laydate.js" type="text/javascript"></script>
 	<title>管理员</title>
 </head>
 
@@ -77,28 +77,32 @@
 								<tr>
 									<th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
 									<th width="80px">编号</th>
-									<th width="250px">登录名</th>
-									<th width="100px">角色</th>
+									<th width="100px">登录名</th>
+									<th width="250px">角色</th>
 									<th width="180px">加入时间</th>
 									<th width="70px">状态</th>
 									<th width="200px">操作</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-									<td>1</td>
-									<td>admin</td>
-									<td>超级管理员</td>
-									<td>2016-6-29 12:34</td>
-									<td class="td-status"><span class="label label-success radius">已启用</span></td>
-									<td class="td-manage">
-										<a onClick="member_stop(this,'10001')" href="javascript:;" title="停用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-										<a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;" class="btn btn-xs btn-info"><i
-											 class="fa fa-edit bigger-120"></i></a>
-										<a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
-									</td>
-								</tr>
+								@foreach ($data as $v)
+									<tr>
+										<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
+										<td>{{$v->id}}</td>
+										<td>{{$v->username}}</td>
+										<td>{{$v->role_name}}</td>
+										<td>{{$v->updated_at}}</td>
+										<td class="td-status"><span class="label label-success radius">已启用</span></td>
+										<td class="td-manage">
+											<a onClick="member_stop(this,'10001')" href="javascript:;" title="停用" class="btn btn-xs btn-success">
+												<i class="fa fa-check  bigger-120"></i></a>
+											<a title="编辑" onclick="Competence_modify({{$v->id}})" href="javascript:;" class="btn btn-xs btn-info">
+												<i class="fa fa-edit bigger-120"></i></a>
+											<a title="删除" href="javascript:;" onclick="member_del(this,{{$v->id}},{{$v->rid}})" class="btn btn-xs btn-warning">
+												<i class="fa fa-trash  bigger-120"></i></a>
+										</td>
+									</tr>
+								@endforeach
 							</tbody>
 						</table>
 					</div>
@@ -154,6 +158,11 @@
 
 </html>
 <script type="text/javascript">
+
+		function Competence_modify(id) {
+		window.location.href = "/administrator_update?id="+id;
+	};
+
 	jQuery(function ($) {
 		var oTable1 = $('#sample_table').dataTable({
 			"aaSorting": [[1, "desc"]],//默认第几个排序
@@ -254,16 +263,24 @@
 			layer.msg('已启用!', { icon: 6, time: 1000 });
 		});
 	}
-	/*产品-编辑*/
-	function member_edit(title, url, id, w, h) {
-		layer_show(title, url, w, h);
-	}
 
 	/*产品-删除*/
-	function member_del(obj, id) {
+	function member_del(obj, id,rid) {
 		layer.confirm('确认要删除吗？', function (index) {
-			$(obj).parents("tr").remove();
-			layer.msg('已删除!', { icon: 1, time: 1000 });
+			$.ajax({
+				type:"post",
+				url:"{{route('ajaxadministrator')}}",
+				data:{id:id,rid:rid,_token:"{{csrf_token()}}"},
+				success:function(data){
+// console.log(data)
+
+					if(data){
+						$(obj).parents("tr").remove();
+						layer.msg('已删除!', { icon: 1, time: 1000 });
+						layer.close(index);
+					}
+				}
+			})
 		});
 	}
 	/*添加管理员*/

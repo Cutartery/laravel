@@ -11,6 +11,7 @@
 |
 */
 //登录
+//主页系统首页
 Route::get('/','Admin\AdminController@user')->name('user');
 Route::post('/douser','Admin\AdminController@douser')->name('douser');
 Route::get('/index','Admin\IndexController@index')->name('index');
@@ -18,16 +19,6 @@ Route::get('/index','Admin\IndexController@index')->name('index');
 Route::get('/home','Admin\IndexController@home')->name('home');
 
 Route::group(['middleware' => 'sign'], function(){
-
-
-//主页系统首页
-
-
-
-
-
-
-
 
 
 //主页产品管理
@@ -48,8 +39,6 @@ Route::post('/ajaxbrpicture_add','Admin\ProductController@ajaxbrpicture_add')->n
 
 
 
-
-
 //品牌管理
 //品牌添加
 Route::get('/Add_Brand','Admin\ProductController@Add_Brand')->name('Add_Brand');
@@ -61,8 +50,6 @@ Route::get('/Add_Brand_update/{id}','Admin\ProductController@Add_Brand_update')-
 Route::post('/doAdd_Brand_update/{id}','Admin\ProductController@doAdd_Brand_update')->name('doAdd_Brand_update');
 //品牌删除
 Route::post('/delAdd_Brand_update','Admin\ProductController@delAdd_Brand_update')->name('delAdd_Brand_update');
-
-
 
 
 //分类管理
@@ -79,10 +66,6 @@ Route::post('/doproduct_category_insert/{id}','Admin\ProductController@doproduct
 Route::get('/Category_Manage','Admin\ProductController@Category_Manage')->name('Category_Manage');
 Route::get('/Brand_detailed','Admin\ProductController@Brand_detailed')->name('Brand_detailed');
 Route::get('/member_show','Admin\ProductController@member_show')->name('member_show');
-
-
-
-
 
 
 
@@ -131,6 +114,9 @@ Route::get('/admin_Competence','Admin\ManageController@admin_Competence')->name(
 
 Route::get('/administrator','Admin\ManageController@administrator')->name('administrator');//添加管理员
 Route::post('/doadministrator','Admin\ManageController@doadministrator')->name('doadministrator');//处理管理员
+Route::get('/administrator_update','Admin\ManageController@administrator_update')->name('administrator_update');//修改管理员
+Route::post('/administratordo','Admin\ManageController@administratordo')->name('administratordo');//修改管理员
+Route::post('/ajaxadministrator','Admin\ManageController@ajaxadministrator')->name('ajaxadministrator');//删除管理员
 
 Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info');
 //添加权限
@@ -141,8 +127,4 @@ Route::get('/Competence_update','Admin\ManageController@Competence_update')->nam
 Route::post('/doCompetence_update','Admin\ManageController@doCompetence_update')->name('doCompetence_update');
 Route::post('/ajaxCompetence','Admin\ManageController@ajaxCompetence')->name('ajaxCompetence');//添加修改权限不重复ajax
 Route::post('/deleteCompetence','Admin\ManageController@deleteCompetence')->name('deleteCompetence');//删除
-
-
-
-
 });

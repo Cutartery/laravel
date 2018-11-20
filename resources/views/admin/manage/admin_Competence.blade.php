@@ -94,7 +94,6 @@
 	/*修改权限*/
 	function Competence_modify(id) {
 		window.location.href = "/Competence_update?id="+id;
-
 	};
 	/*字数限制*/
 	function checkLength(which) {

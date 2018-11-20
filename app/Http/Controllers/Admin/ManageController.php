@@ -22,12 +22,12 @@ class ManageController extends Controller
             $v->count = count(explode(",",$v->role_ids));
             $admin_sum+=$v->count;
         }
-        return view('admin.manage.administrator',['role'=>$role,'admin_sum'=>$admin_sum]);
+        $data = $admin->administratorthere();
+        return view('admin.manage.administrator',['role'=>$role,'admin_sum'=>$admin_sum,'data' =>$data]);
     }
     //处理添加管理员
     public function doadministrator(Request $req)
     {
-        // dd($req->all());
         $admin = new Admin;
         $admin->username = $req->username;
         $admin->password = md5($req->password);
@@ -41,6 +41,44 @@ class ManageController extends Controller
     }
     public function admin_info(){
         return view('admin.manage.admin_info');
+    }
+    //修改管理员
+    public function administrator_update()
+    {
+        $id = $_GET['id'];
+        $admin = new Admin;
+        $data = $admin->administrator_update($id);
+        $role = $admin->administrator();
+        return view('admin.manage.administrator_update',['role' => $role , 'data' => $data]);
+    }
+    //执行修改管理员数据
+    public function administratordo(Request $req)
+    {
+        
+        Admin::where('id',$req->id)->update(['username'=>$req->username,'password'=>md5($req->password)]);
+        admin_admin_role::where('admin_id',$req->id)->where('role_id',$req->select)->delete();
+        $admin = new admin_admin_role;
+        $admin->admin_id = $req->id;
+        $admin->role_id = $req->role_id;
+        $aa = $admin->save();
+        if($aa == true)
+        {
+            return redirect()->route('administrator');
+        }
+    }
+    //删除管理员
+    public function ajaxadministrator(Request $req)
+    {
+        $a = admin_admin_role::where('admin_id',$req->id)->get();
+        if(count($a)>1){
+            
+             admin_admin_role::where('admin_id',$req->id)->where('role_id',$req->rid)->delete();
+             return 1;
+        }else{
+            admin_admin_role::where('admin_id',$req->id)->where('role_id',$req->rid)->delete();
+            admin::where('id',$req->id)->delete();
+            return 0;
+        }
     }
 
     //权限管理主页面

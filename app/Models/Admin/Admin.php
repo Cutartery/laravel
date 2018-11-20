@@ -60,4 +60,23 @@ class Admin extends Model
         ->get();
         return $data;
     }
+    public function administratorthere()
+    {
+        $data = DB::table('admins as admin')
+        ->join("admin_admin_roles as adro",'adro.admin_id','=','admin.id')
+        ->join('admin_roles as adros','adros.id','=','adro.role_id')
+        ->select('admin.*','adros.role_name','adros.id as rid')
+        ->get();
+        // dd($data);
+        return $data;
+    }
+    public function administrator_update($id){
+        $data = DB::table('admins as admin')
+        ->join('admin_admin_roles as adro','adro.admin_id','=','admin.id')
+        ->join('admin_roles as adros','adros.id','=','adro.role_id')
+        ->where('admin.id',$id)
+        ->first();
+        // dd($data);
+        return $data;   
+    }
 }
