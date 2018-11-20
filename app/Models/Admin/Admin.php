@@ -50,4 +50,14 @@ class Admin extends Model
         
         return $data;
     }
+    public function administrator()
+    {
+        
+        $data = DB::table('admin_roles as adrole')
+        ->join('admin_admin_roles as admrole','admrole.role_id','=','adrole.id')
+        ->groupBy('admrole.role_id')
+        ->select("*",DB::raw('GROUP_CONCAT(admrole.role_id) role_ids'))
+        ->get();
+        return $data;
+    }
 }

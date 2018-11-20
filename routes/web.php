@@ -128,7 +128,10 @@ Route::get('/System_section','Admin\SystemController@System_section')->name('Sys
 Route::get('/System_Logs','Admin\SystemController@System_Logs')->name('System_Logs');
 //管理员管理
 Route::get('/admin_Competence','Admin\ManageController@admin_Competence')->name('admin_Competence');
-Route::get('/administrator','Admin\ManageController@administrator')->name('administrator');
+
+Route::get('/administrator','Admin\ManageController@administrator')->name('administrator');//添加管理员
+Route::post('/doadministrator','Admin\ManageController@doadministrator')->name('doadministrator');//处理管理员
+
 Route::get('/admin_info','Admin\ManageController@admin_info')->name('admin_info');
 //添加权限
 Route::get('/Competence','Admin\ManageController@Competence')->name('Competence');
@@ -138,6 +141,7 @@ Route::get('/Competence_update','Admin\ManageController@Competence_update')->nam
 Route::post('/doCompetence_update','Admin\ManageController@doCompetence_update')->name('doCompetence_update');
 Route::post('/ajaxCompetence','Admin\ManageController@ajaxCompetence')->name('ajaxCompetence');//添加修改权限不重复ajax
 Route::post('/deleteCompetence','Admin\ManageController@deleteCompetence')->name('deleteCompetence');//删除
+
 
 
 

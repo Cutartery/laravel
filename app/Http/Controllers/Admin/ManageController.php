@@ -13,8 +13,31 @@ use App\Models\Admin\Admin;
 
 class ManageController extends Controller
 {
+    //添加管理员
     public function administrator(){
-        return view('admin.manage.administrator');
+        $admin = new Admin;
+        $role = $admin->administrator();
+        $admin_sum = 0;
+        foreach($role as $v){
+            $v->count = count(explode(",",$v->role_ids));
+            $admin_sum+=$v->count;
+        }
+        return view('admin.manage.administrator',['role'=>$role,'admin_sum'=>$admin_sum]);
+    }
+    //处理添加管理员
+    public function doadministrator(Request $req)
+    {
+        // dd($req->all());
+        $admin = new Admin;
+        $admin->username = $req->username;
+        $admin->password = md5($req->password);
+        $admin->save();
+        $id = $admin->id;
+        $adrole = Admin_admin_role::create(['admin_id'=>$id,'role_id'=>$req->role_id]);
+        if($adrole == true)
+        {
+            return redirect()->route('administrator');
+        }
     }
     public function admin_info(){
         return view('admin.manage.admin_info');
@@ -66,7 +89,7 @@ class ManageController extends Controller
     //权限修改接收数据
     public function doCompetence_update(Request $req)
     {
-        dd($req->all());
+        // dd($req->all());
         Admin_role::where('id',$req->role_id)->update(['role_content'=>$req->role_content,'role_name'=>$req->role_name]);
         Admin_admin_role::where('role_id',$req->role_id)->delete();
         foreach($req->admin_id as $v)
