@@ -15,7 +15,6 @@
 Route::get('/','Admin\AdminController@user')->name('user');
 Route::post('/douser','Admin\AdminController@douser')->name('douser');
 Route::get('/index','Admin\IndexController@index')->name('index');
-
 Route::get('/home','Admin\IndexController@home')->name('home');
 
 Route::group(['middleware' => 'sign'], function(){
@@ -128,3 +127,19 @@ Route::post('/doCompetence_update','Admin\ManageController@doCompetence_update')
 Route::post('/ajaxCompetence','Admin\ManageController@ajaxCompetence')->name('ajaxCompetence');//添加修改权限不重复ajax
 Route::post('/deleteCompetence','Admin\ManageController@deleteCompetence')->name('deleteCompetence');//删除
 });
+
+
+
+Route::get('/goods','goods\GoodsController@goods_index')->name('goods_index');//首页
+Route::get('/goods_search','goods\GoodsController@goods_search')->name('goods_search');//商品页
+Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item');//商品详情页
+
+
+Route::get('/goods_login','goods\LoginController@goods_login')->name('goods_login');//前台登陆
+Route::get('/goods_register','goods\LoginController@goods_register')->name('goods_register');//前台注册
+Route::post('/goods_doregister','goods\LoginController@goods_doregister')->name('goods_doregister');//前台注册
+
+
+Route::get('/goods_getOrderinfo','goods\ShoppingController@goods_getOrderinfo')->name('goods_getOrderinfo');//购物车结算页
+Route::get('/goods_success_cart','goods\ShoppingController@goods_success_cart')->name('goods_success_cart');//加入购物车提示页
+Route::get('/goods_cart','goods\ShoppingController@goods_cart')->name('goods_cart');//购物车首页
