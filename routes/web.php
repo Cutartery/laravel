@@ -136,8 +136,11 @@ Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item')
 
 
 Route::get('/goods_login','goods\LoginController@goods_login')->name('goods_login');//前台登陆
+Route::post('/goods_dologin','goods\LoginController@goods_dologin')->name('goods_dologin');//前台登陆
 Route::get('/goods_register','goods\LoginController@goods_register')->name('goods_register');//前台注册
-Route::post('/goods_doregister','goods\LoginController@goods_doregister')->name('goods_doregister');//前台注册
+Route::post('/goods_ajaxregister','goods\LoginController@goods_ajaxregister')->name('goods_ajaxregister');//前台注册用户名ajax
+Route::post('/goods_mobileregister','goods\LoginController@goods_mobileregister')->name('goods_mobileregister');//前台注册手机号ajax
+Route::post('/goods_doregister','goods\LoginController@goods_doregister')->name('goods_doregister');//前台判断注册
 
 
 Route::get('/goods_getOrderinfo','goods\ShoppingController@goods_getOrderinfo')->name('goods_getOrderinfo');//购物车结算页

@@ -27,7 +27,7 @@
 					<div class="control-group">
 						<label class="control-label">用户名：</label>
 						<div class="controls">
-							<input type="text" name="user" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
+							<input type="text" id="user" name="user" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					<div class="control-group">
@@ -47,7 +47,7 @@
 					<div class="control-group">
 						<label class="control-label">手机号：</label>
 						<div class="controls">
-							<input type="text" name="mobile" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
+							<input type="text" id="mobile" name="mobile" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
 						</div>
 					</div>
 					<div class="control-group">
@@ -60,7 +60,7 @@
 					<div class="control-group">
 						<label for="inputPassword" class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="controls">
-							<input  name="m1" type="checkbox" value="2" checked=""><span>同意协议并注册《品优购用户协议》</span>
+							<input id="m1" name="m1" checked type="checkbox"><span>同意协议并注册《品优购用户协议》</span>
 						</div>
 					</div>
 					<div class="control-group">
@@ -102,9 +102,51 @@
 
 </html>
 <script>
+	$("#user").change(function(){
+		var user = $("#user").val()
+		$.ajax({
+			type:"post",
+			url:"{{route('goods_ajaxregister')}}",
+			data:{user:user,_token:"{{csrf_token()}}"},
+			success:function(a){
+				console.log(a)
+				if(a==1){
+					alert('此用户已存在!')
+					$("#user").val('');
+				}
+			}
+		})
+	})
+	$("#mobile").change(function(){
+		var mobile = $("#mobile").val()
+		$.ajax({
+			type:"post",
+			url:"{{route('goods_mobileregister')}}",
+			data:{mobile:mobile,_token:"{{csrf_token()}}"},
+			success:function(a){
+				console.log(a)
+				if(a==1){
+					alert('手机号已使用')
+					$("#mobile").val('');
+				}
+			}
+		})
+	})
+
 	$("#app").click(function(){
 		$("form").submit()
 	});
+	$("#m1").click(function(){
+		if($(this).is(':checked')){
+			$("#app").attr("disabled", false);
+		}else{
+			$("#app").attr("disabled", true);
+		}
+	})
+
+
+
+
 
     $('#sendVerifySmsButton').sms({
         //laravel csrf token
@@ -123,47 +165,42 @@
 	});
 	
 	function validate() {
-      
-	  var pass = $("#pass").val();
-	  var pass1 = $("#pass1").val();
-	    if(pass == pass1)
-	    {
-		 	$("#tishi").html("两次密码相同");
-		    $("#tishi").css("color","green");
-	  		$("#xiugai").removeAttr("disabled");
-	    }
-  		else {
-		 	$("#tishi").html("两次密码不相同");
-		    $("#tishi").css("color","red")
-			$("button").attr("disabled","disabled"); 
-			$("#pass").val("");
-			$("#pass1").val("");
-		}
-
-
-
-		$('#textfield2').change(function(){
-		var file1 = $('#textfield2').val()
-		var file = $('#textfield3').val()
-		if(file!="")
+    
+		$('#pass').change(function(){
+		var pass = $('#pass').val()
+		var pass1 = $('#pass1').val()
+		if(pass1!="")
 		{
-			if(fiel1!=file)
+			if(pass!=pass1)
 			{
-				alert( '两次密码不同!')
-				$('#textfield2').val("")
-				$('#textfield3').val("")
+				$("#tishi").html("两次密码不相同");
+		    	$("#tishi").css("color","red")
+				$("button").attr("disabled","disabled"); 
+				$('#pass').val("")
+				$('#pass1').val("")
+			}else{
+				$("#tishi").html("两次密码相同");
+				$("#tishi").css("color","green");
+				$("#xiugai").removeAttr("disabled");
 			}
+
 		}
 		})
-			$('#textfield3').change(function(){
-				var file1 = $('#textfield2').val()
-				var file = $('#textfield3').val()
-				if(file1!="")
+			$('#pass1').change(function(){
+				var pass = $('#pass').val()
+				var pass1 = $('#pass1').val()
+				if(pass!="")
 				{
-					if(file1!=file){
-						alert( '两次密码不同!')
-						$('#textfield2').val("")
-						$('#textfield3').val("")
+					if(pass!=pass1){
+						$("#tishi").html("两次密码不相同");
+		    			$("#tishi").css("color","red")
+						$("button").attr("disabled","disabled"); 
+						$('#pass').val("")
+						$('#pass1').val("")
+					}else{
+						$("#tishi").html("两次密码相同");
+						$("#tishi").css("color","green");
+						$("#xiugai").removeAttr("disabled");
 					}
 				}
 			})

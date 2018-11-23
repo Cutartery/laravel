@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
@@ -39,12 +38,13 @@
 							<img src="img/wx_cz.jpg" />
 						</div>
 						<div id="profile" class="tab-pane  active">
-							<form class="sui-form">
+							<form action="{{route('goods_dologin')}}" method="POST" class="sui-form">
+								@csrf
 								<div class="input-prepend"><span class="add-on loginname"></span>
-									<input id="prependedInput" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
+									<input type="text" name="phone" placeholder="用户名/手机号" class="span2 input-xfat">
 								</div>
 								<div class="input-prepend"><span class="add-on loginpwd"></span>
-									<input id="prependedInput" type="password" placeholder="请输入密码" class="span2 input-xfat">
+									<input type="password" name="pass" placeholder="请输入密码" class="span2 input-xfat">
 								</div>
 								<div class="setting">
 									<label class="checkbox inline">
@@ -54,7 +54,7 @@
 									<span class="forget">忘记密码？</span>
 								</div>
 								<div class="logined">
-									<a class="sui-btn btn-block btn-xlarge btn-danger" href="{{route('goods_login')}}">登&nbsp;&nbsp;录</a>
+									<a id="app" onclick="return false;" class="sui-btn btn-block btn-xlarge btn-danger">登&nbsp;&nbsp;录</a>
 								</div>
 							</form>
 							<div class="otherlogin">
@@ -99,3 +99,9 @@
 </body>
 
 </html>
+<script>
+
+	$("#app").click(function(){
+		$("form").submit()
+	});
+</script>
