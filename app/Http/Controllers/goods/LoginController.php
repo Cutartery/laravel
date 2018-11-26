@@ -65,6 +65,7 @@ class LoginController extends Controller
         $good = Goods_login::where('phone',$req->phone)->orwhere('name',$req->phone)->first();
         if($good){
             if (Hash::check($req->pass,$good->pass)) {
+                session(['user'=>$good->user]);
                 return redirect()->route('goods_index');
             }
         }

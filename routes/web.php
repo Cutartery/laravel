@@ -131,9 +131,6 @@ Route::post('/deleteCompetence','Admin\ManageController@deleteCompetence')->name
 
 
 Route::get('/goods','goods\GoodsController@goods_index')->name('goods_index');//首页
-Route::get('/goods_search','goods\GoodsController@goods_search')->name('goods_search');//商品页
-Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item');//商品详情页
-
 
 Route::get('/goods_login','goods\LoginController@goods_login')->name('goods_login');//前台登陆
 Route::post('/goods_dologin','goods\LoginController@goods_dologin')->name('goods_dologin');//前台登陆
@@ -142,7 +139,12 @@ Route::post('/goods_ajaxregister','goods\LoginController@goods_ajaxregister')->n
 Route::post('/goods_mobileregister','goods\LoginController@goods_mobileregister')->name('goods_mobileregister');//前台注册手机号ajax
 Route::post('/goods_doregister','goods\LoginController@goods_doregister')->name('goods_doregister');//前台判断注册
 
+Route::group(['middleware' => 'goods'], function(){
 
+Route::get('/goods_search','goods\GoodsController@goods_search')->name('goods_search');//商品页
+Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item');//商品详情页
 Route::get('/goods_getOrderinfo','goods\ShoppingController@goods_getOrderinfo')->name('goods_getOrderinfo');//购物车结算页
 Route::get('/goods_success_cart','goods\ShoppingController@goods_success_cart')->name('goods_success_cart');//加入购物车提示页
 Route::get('/goods_cart','goods\ShoppingController@goods_cart')->name('goods_cart');//购物车首页
+
+});

@@ -15,6 +15,10 @@ class goods
      */
     public function handle($request, Closure $next)
     {
+        $empty = session('user');
+        if(!isset($empty)){
+            return redirect()->route('goods_login');
+        }
         return $next($request);
     }
 }
