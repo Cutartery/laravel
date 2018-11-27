@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class classify extends Model
 {
@@ -43,4 +44,16 @@ class classify extends Model
         }
         return $res;        
     }
+    public function goods_search($id){
+        $data = DB::table('products as pro')
+        ->select('sku.id as sku_id','img.bg_image','sku.sku_price','pro.pro_name')
+        ->leftJoin('skus as sku','sku.pro_id','=','pro.id')
+        ->leftJoin('images as img','img.pro_id','=','pro.id')
+        ->groupBy('pro.id')
+        ->where('pro.ify_id3',$id)
+        ->paginate(2);
+        return $data;
+
+    }
+
 }

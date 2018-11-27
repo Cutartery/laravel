@@ -144,7 +144,7 @@
 												<dd>   
 													 @foreach ($a['child'] as $b)
 														<em>
-															<a href="">{{$b['ify_name']}}</a>
+														<a href="{{ route('goods_search') }}?id={{$b['id']}}">{{$b['ify_name']}}</a>
 														</em>
 													@endforeach
 												</dd>

@@ -46,6 +46,7 @@ class ProductController extends Controller
 
     public function dopicture_add(Request $req)//页面传来数据
     {
+        // dd($req->all());
         $product = new Product;
         $product->fill($req->all());
         $product->save();
@@ -87,11 +88,11 @@ class ProductController extends Controller
                 $img->save('./uploads/'.$sm_path);
                 
                 $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$_FILES['image']['name'][$k];
-                $img->resize(150,150);
+                $img->resize(250,250);
                 $img->save('./uploads/'.$md_path);
     
                 $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$_FILES['image']['name'][$k];
-                $img->resize(200,200);
+                $img->resize(400,400);
                 $img->save('./uploads/'.$bg_path);
     
                 $image_logo->pro_id = $id;

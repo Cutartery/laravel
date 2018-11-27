@@ -96,15 +96,14 @@
                     <div class="Add_p_s">
                         <label class="form-label col-2">分&nbsp;&nbsp;&nbsp;&nbsp;类：</label>
                         <div class="formControls col-2" style="width:400px;">
-                                <select name="" id="select1">
-                                    <option value="">请选择...</option>
-                                    @foreach ($data as $v)
-                                        <option value="{{$v->id}}">{{$v->ify_name}}</option>
-                                     @endforeach
-                                </select>
-                                <select name="" id="select2"></select>
-                                <select name="ify_id" id="select3"></select>
-                               
+                            <select name="ify_id1" id="select1">
+                                <option value="">请选择...</option>
+                                @foreach ($data as $v)
+                                    <option value="{{$v->id}}">{{$v->ify_name}}</option>
+                                    @endforeach
+                            </select>
+                            <select name="ify_id2" id="select2"></select>
+                            <select name="ify_id3" id="select3"></select>
                         </div>
                     </div> 
                 </div>
