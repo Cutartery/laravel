@@ -67,24 +67,7 @@
 
 <body>
     <div class="clearfix" id="add_picture">
-        <div id="scrollsidebar" class="left_Treeview">
-            <div class="show_btn" id="rightArrow"><span></span></div>
-            <div class="widget-box side_content">
-                <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
-                <div class="side_list">
-                    <div class="widget-header header-color-green2">
-                        <h4 class="lighter smaller">选择产品类型</h4>
-                    </div>
-                    <div class="widget-body">
-                        <div class="widget-main padding-8">
-                            <div id="treeDemo" class="ztree"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page_right_style">
-            <div class="type_title">添加商品</div>
+        <div>
             <form action="{{route('dopicture_add')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
                 @csrf
                 <div class="clearfix cl">
@@ -133,25 +116,22 @@
                 <div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
                     <div style="height:50px;">
                         <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
-                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock[]"></div>
+                        <div class="formControls col-10"><input type="text" class="input-text" name="sku_stock-0"></div>
                     </div>
                     <div style="height:50px;">
                         <label class="form-label col-2"><span class="c-red">*</span>商品价格：</label>
-                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_price[]"></div>
+                        <div class="formControls col-10"><input type="text" class="input-text" name="sku_price-0"></div>
                     </div>
-                    <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
+                    <input type="button" id="lala" class="swer"  onclick="imgs(event,0)" value="添加图片">
+                    <input type="button" class="swer sku"  onclick="add_sku(event,0)" value="添加一条sku">
                     <div style="width:100%;" id="lms">
                         <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                             <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
+                            <div class="formControls col-10"><input type="text" class="input-text" name="attr_attr-0[]"></div>
                         </div>
                         <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                             <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                            <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
-                        </div>
-                        <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                            <label class="form-label col-2"><span class="c-red">*</span>图片上传:</label>
-                            <input type="file" class="image" name="image[]" value="上传图片">
+                            <div class="formControls col-10"><input type="text" class="input-text" name="attr_val-0[]"></div>
                         </div>
                     </div>
                     
@@ -183,68 +163,65 @@
     <script type="text/javascript" src="js/H-ui.js"></script>
     <script type="text/javascript" src="js/H-ui.admin.js"></script>
     <script>
-    
+    let a = 0;
     $('.qwer').click(function(){
+        a++
        var str = 
         `<div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
             <div style="height:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock[]"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock-`+a+`"></div>
             </div>
             <div style="height:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>商品价格：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_price[]"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_price-`+a+`"></div>
             </div>
-            <input type="button" class="swer" onclick="add_sku(event)" value="添加一条sku">
+            <input type="button" id="lala" class="swer"  onclick="imgs(event,`+a+`)" value="添加图片">
+            <input type="button" class="swer sku" onclick="add_sku(event,`+a+`)" value="添加一条sku">
             <div style="width:100%;" id="lms">
                 <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                     <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr-`+a+`[]"></div>
                 </div>
                 <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                     <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
-                </div>
-                <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                    <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
-                    <input type="file" class="image" name="image[]" value="上传图片">
+                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val-`+a+`[]"></div>
                 </div>
             </div>
         </div>`;
         // $(this).append(str);
         var model = document.querySelector('#tj')
         model.insertAdjacentHTML('beforeBegin',str);
-           $(".image").change(function(){
-        // 获取选择的图片
-        var file = this.files[0];
-        // 转成字符串
-        var str = getObjectUrl(file);
-        // 先删除上一个
-        $(this).prev('.img_preview').remove();
-        // 在框的前面放一个图片
-        $(this).before("<div class='img_preview'><img src='"+str+"' width='120' height='auto'></div>");
-    });
     })
-    
-    function add_sku(event){
+
+
+    function add_sku(event,id){
         var html =`
         <div style="width:100%;">
             <div style="height:50px;width:100px;display:inline-block;margin-right:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>sku名称：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr[]"></div>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_attr-`+id+`[]"></div>
             </div>
             <div  style="height:50px;width:120px;display:inline-block;margin-right:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>sku值：</label>
-                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val[]"></div>
-            </div>
-            <div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
-                <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
-                <input type="file" class="image" name="image[]" value="上传图片">
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="attr_val-`+id+`[]"></div>
             </div>
         </div>
         `;
         var lms = event.path[1];
+
         lms.insertAdjacentHTML('beforeEnd',"<hr>"+html)
+    }
+    
+    function imgs(event,id){
+        var html = 
+        `<div style="height:50px;width:120px;display:inline-block;margin-right:50px;">
+            <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
+            <input type="file" class="image" name="image-`+id+`[]" value="上传图片">
+        </div>`;
+        var lala = event.path[1].childNodes[7];
+     
+        lala.insertAdjacentHTML('beforeBegin',html)
         $(".image").change(function(){
         // 获取选择的图片
         var file = this.files[0];
@@ -254,9 +231,9 @@
         $(this).prev('.img_preview').remove();
         // 在框的前面放一个图片
         $(this).before("<div class='img_preview'><img src='"+str+"' width='120' height='auto'></div>");
-    });
-
+        });        
     }
+
 
     $('#select1').change(function(){
         // console.log(123456)

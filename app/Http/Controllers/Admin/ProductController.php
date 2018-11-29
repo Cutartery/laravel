@@ -44,9 +44,53 @@ class ProductController extends Controller
         return $data;
     }
 
-    public function dopicture_add(Request $req)//页面传来数据
+    public function dopicture_add(Request $req)//处理添加数据
     {
-        // dd($req->all());
+        $data = $req->all();
+        $goods = [];
+        foreach($data as $k => $v){
+            $str = explode("-",$k);
+            if(isset($str[1])){
+                if($str[0]=="sku_stock"){
+                    $goods['stock'][] = $sku_stocks[$str[1]] = $v;
+                }
+                if($str[0]=="sku_price"){
+                    $goods['price'][] = $sku_prices[$str[1]] = $v;
+                }
+                if($str[0]=="attr_attr"){
+                    $goods['attr'][] = $attr_attrs[$str[1]] = $v;
+                }
+                if($str[0]=="attr_val"){
+                    $goods['val'][] = $attr_vals[$str[1]] = $v;
+                }
+                if($str[0]=="image"){
+                    $goods['img'][] = $images[$str[1]] = $v;
+                }
+            }
+        }
+        $product = new Product;
+        $product->fill($req->all());
+        $product->save();
+        $pro_id = $product->id;
+        foreach($goods['stock'] as $k => $v){
+            $sku = new sku;
+            $sku['pro_id'] = $pro_id;
+            $sku['sku_price'] = $v->price;
+            $sku['sku_stock'] = $v->stock;
+            $sku_id = $sku->id;
+            $sku->save();
+        }
+
+
+
+
+
+
+
+
+
+
+
         $product = new Product;
         $product->fill($req->all());
         $product->save();
