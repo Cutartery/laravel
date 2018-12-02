@@ -48,12 +48,26 @@ class classify extends Model
         $data = DB::table('products as pro')
         ->select('sku.id as sku_id','img.bg_image','sku.sku_price','pro.pro_name')
         ->leftJoin('skus as sku','sku.pro_id','=','pro.id')
-        ->leftJoin('images as img','img.pro_id','=','pro.id')
+        ->leftJoin('images as img','img.sku_id','=','sku.id')
         ->groupBy('pro.id')
         ->where('pro.ify_id3',$id)
         ->paginate(2);
         return $data;
 
     }
+    public function goods_item($id){
+        $data = DB::table('products as pro')
+        ->leftJoin('skus as sku','sku.pro_id','=','pro.id')
+        ->leftJoin('images as img','img.sku_id','=','sku.id')
+        ->leftJoin('attributes as att','att.sku_id','=','sku.id')
+        ->groupBy('sku.id')
+        ->where('sku.id',$id)
+        ->get();
+        return $data;
+    }
+
+
+
+
 
 }

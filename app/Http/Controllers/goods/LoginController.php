@@ -61,11 +61,12 @@ class LoginController extends Controller
     public function goods_dologin(Request $req)
     {
         // dd($req->all());
-
         $good = Goods_login::where('phone',$req->phone)->orwhere('name',$req->phone)->first();
         if($good){
-            if (Hash::check($req->pass,$good->pass)) {
-                session(['user'=>$good->user]);
+            if (Hash::check($req->pass,$good['pass'])) {
+                
+                session(['goods_user'=>$good['name'],'goods_phone'=>$good['phone']]);
+                // dd(session('goods_user'));
                 return redirect()->route('goods_index');
             }
         }

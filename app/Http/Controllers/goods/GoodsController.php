@@ -8,6 +8,8 @@ use App\Models\Admin\classify;
 use Storage;
 class GoodsController extends Controller
 {
+
+    //前台首页
     public function goods_index()
     {
         $class = new classify;
@@ -17,18 +19,27 @@ class GoodsController extends Controller
             'data' => $data
             ]);
     }
-    public function goods_item(){
-        return view('goods.good.item');
-    }
-    public function goods_search(){
 
+
+    //向前台传输数据
+    public function goods_search(){
         $id = $_GET['id'];
         $class = new classify;
         $data = $class->goods_search($id);
-// dd($data);
+        // dd($data);
         return view('goods.good.search',[
             'data' => $data,
             'id' => $id
         ]);
+    }
+
+
+    //前台详情页
+    public function goods_item(){
+        $id = $_GET['sku_id'];
+        $class = new classify;
+        $data = $class->goods_item($id);
+        // dd($data);
+        return view('goods.good.item',['data'=>$data]);
     }
 }

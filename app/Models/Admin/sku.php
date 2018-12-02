@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class sku extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['pro_id','attr_id','sku_price','sku_stock'];
+    protected $fillable = ['pro_id','sku_price','sku_stock'];
     //
 }

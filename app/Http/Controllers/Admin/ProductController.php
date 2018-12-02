@@ -19,6 +19,8 @@ use Storage;
 
 class ProductController extends Controller
 {
+    
+
     //添加商品页面显示
     public function picture_add(){
 
@@ -46,67 +48,39 @@ class ProductController extends Controller
 
     public function dopicture_add(Request $req)//处理添加数据
     {
+        // dd($req->all());
         $data = $req->all();
         $goods = [];
         foreach($data as $k => $v){
             $str = explode("-",$k);
             if(isset($str[1])){
                 if($str[0]=="sku_stock"){
-                    $goods['stock'][] = $sku_stocks[$str[1]] = $v;
+                    $goods['stock'][$str[1]] = $v;
                 }
                 if($str[0]=="sku_price"){
-                    $goods['price'][] = $sku_prices[$str[1]] = $v;
+                    $goods['price'][$str[1]] = $v;
                 }
                 if($str[0]=="attr_attr"){
-                    $goods['attr'][] = $attr_attrs[$str[1]] = $v;
+                    $goods['attr'][$str[1]] = $v;
                 }
                 if($str[0]=="attr_val"){
-                    $goods['val'][] = $attr_vals[$str[1]] = $v;
+                    $goods['val'][$str[1]] = $v;
                 }
                 if($str[0]=="image"){
-                    $goods['img'][] = $images[$str[1]] = $v;
+                    $goods['img'][$str[1]] = $v;
+                    foreach($_FILES[$k]['name'] as $imgv){
+                        $goods['imgName'][$str[1]][] =  $imgv;
+                    }
+                    
                 }
             }
         }
+        
         $product = new Product;
         $product->fill($req->all());
         $product->save();
         $pro_id = $product->id;
-        foreach($goods['stock'] as $k => $v){
-            $sku = new sku;
-            $sku['pro_id'] = $pro_id;
-            $sku['sku_price'] = $v->price;
-            $sku['sku_stock'] = $v->stock;
-            $sku_id = $sku->id;
-            $sku->save();
-        }
 
-
-
-
-
-
-
-
-
-
-
-        $product = new Product;
-        $product->fill($req->all());
-        $product->save();
-
-        $id = DB::getPdo()->lastInsertId();
-        $data = $req->all();
-        foreach($data['sku_stock'] as $k => $v)
-        {
-            $skus = new sku;
-            $sku = [];
-            $sku['sku_stock']=$v;
-            $sku['sku_price']=$data['sku_price'][$k];   
-            $sku['pro_id'] = $id;
-            $skus->fill($sku);  
-            $skus->save();
-        }
 
         $date = date("Ymd");
         $path = "./uploads/thumbnail/$date";
@@ -114,50 +88,51 @@ class ProductController extends Controller
             File::makeDirectory($path, 0777, true, true);
         }
 
-        
-        foreach($data['attr_attr'] as $k => $v)
-        {
-            $image_id = "";
-
-            if(isset($data['image'][$k]))
-            {
-                
-                $image_logo = new image;
-                $imagepath = $data['image'][$k]->path();
-                
-                $img = Images::make($imagepath);
-                
-                $sm_path = 'thumbnail/'.$date.'/sm_'.md5(time()).$_FILES['image']['name'][$k];
-                $img->resize(80,80);
-                $img->save('./uploads/'.$sm_path);
-                
-                $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$_FILES['image']['name'][$k];
-                $img->resize(250,250);
-                $img->save('./uploads/'.$md_path);
-    
-                $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$_FILES['image']['name'][$k];
-                $img->resize(400,400);
-                $img->save('./uploads/'.$bg_path);
-    
-                $image_logo->pro_id = $id;
-                $image_logo->sm_image = $sm_path;
-                $image_logo->md_image = $md_path;
-                $image_logo->bg_image = $bg_path;
-                
-                $image_logo->save();
-                $image_id = $image_logo->id;
+        foreach($goods['stock'] as $k => $v){
+            $sku = sku::create([
+                'pro_id'=>$pro_id,
+                'sku_stock'=>$v,
+                'sku_price'=>$goods['price'][$k]
+            ]);
+            $sku_id = $sku->id;
+            // dd($sku_id);
+            foreach($goods['attr'][$k] as $k2 => $v2){
+                $attr = attribute::create([
+                    'sku_id' => $sku_id,
+                    'attr_attr' => $v2,
+                    'attr_val' => $goods['val'][$k][$k2],
+                ]);
             }
-            
-            $attr = new attribute;
-            $attrs = [];
-            $attrs['attr_attr'] = $v;
-            $attrs['attr_val'] = $data['attr_val'][$k];
-            $attrs['pro_id'] = $id;
-            $attrs['image_id'] = $image_id;
-            $attr->fill($attrs);
-            $aa = $attr->save();
+            // dd($goods);
+            if(isset($goods['img'][$k])){
+                foreach($goods['img'][$k] as $k3 => $v3){
+
+                    $imagepath = $v3->path();
+                    $img = Images::make($imagepath);
+
+                    $sm_path = 'thumbnail/'.$date.'/sm_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(80,80);
+                    $img->save('./uploads/'.$sm_path);
+
+                    $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(250,250);
+                    $img->save('./uploads/'.$md_path);
+        
+                    $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(400,400);
+                    $img->save('./uploads/'.$bg_path);
+
+                    $image = image::create([
+                        'sku_id' => $sku_id,
+                        'bg_image' => $bg_path,
+                        'md_image' => $md_path,
+                        'sm_image' => $sm_path,
+                    ]);
+                }
+            }
         }
-        if($aa == true)
+ 
+        if($image == true)
         {
             return redirect()->route('Products_List');
         }

@@ -15,8 +15,9 @@ class goods
      */
     public function handle($request, Closure $next)
     {
-        $empty = session('user');
-        if(!isset($empty)){
+        $empty = session('goods_user');
+        $aa = session('goods_phone');
+        if(!isset($empty)|| !isset($aa)){
             return redirect()->route('goods_login');
         }
         return $next($request);
