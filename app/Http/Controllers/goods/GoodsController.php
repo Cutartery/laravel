@@ -5,6 +5,7 @@ namespace App\Http\Controllers\goods;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\classify;
+use App\Models\Admin\image;
 use Storage;
 class GoodsController extends Controller
 {
@@ -37,9 +38,10 @@ class GoodsController extends Controller
     //前台详情页
     public function goods_item(){
         $id = $_GET['sku_id'];
+        $image = image::where('sku_id',$id)->get();
         $class = new classify;
         $data = $class->goods_item($id);
         // dd($data);
-        return view('goods.good.item',['data'=>$data]);
+        return view('goods.good.item',['data'=>$data,'image'=>$image]);
     }
 }

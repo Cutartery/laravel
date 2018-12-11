@@ -70,10 +70,7 @@
         <div>
             <form action="{{route('dopicture_add')}}" method="post" enctype="multipart/form-data" class="form form-horizontal" id="form-article-add">
                 @csrf
-                <div class="clearfix cl">
-                    <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
-                    <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_name"></div>
-                </div>
+
 
                 <div class=" clearfix cl">
                     <div class="Add_p_s">
@@ -101,19 +98,27 @@
                     </div> 
 
                 </div>
-                <div class="clearfix cl">
+                {{-- <div class="clearfix cl">
                     <label class="form-label col-2">内容摘要：</label>
                     <div class="formControls col-10">
                         <textarea name="pro_content" cols="" rows="" class="textarea" placeholder="说点什么...最少输入10个字符" datatype="*10-100"
                             dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)"></textarea>
                         <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
                     </div>
-                </div>
+                </div> --}}
 
 
                 <input type="button" class="qwer" value="添加一组sku">
 
                 <div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
+                    <div  style="height:50px;">
+                        <label class="form-label col-2"><span class="c-red">*</span>商品标题：</label>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_title-0"></div>
+                    </div>
+                    <div  style="height:50px;">
+                        <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
+                        <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_name-0"></div>
+                    </div>
                     <div style="height:50px;">
                         <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
                         <div class="formControls col-10"><input type="text" class="input-text" name="sku_stock-0"></div>
@@ -169,6 +174,14 @@
        var str = 
         `<div style="border:1px dashed #ccc; padding: 20px;margin:33px;width:96%;" id="model" class="clearfix cl">
             <div style="height:50px;">
+                <label class="form-label col-2"><span class="c-red">*</span>商品标题：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_title-`+a+`"></div>
+            </div>
+            <div style="height:50px;">
+                <label class="form-label col-2"><span class="c-red">*</span>商品名称：</label>
+                <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="pro_name-`+a+`"></div>
+            </div>
+            <div style="height:50px;">
                 <label class="form-label col-2"><span class="c-red">*</span>商品库存：</label>
                 <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name="sku_stock-`+a+`"></div>
             </div>
@@ -191,6 +204,7 @@
         </div>`;
         // $(this).append(str);
         var model = document.querySelector('#tj')
+       
         model.insertAdjacentHTML('beforeBegin',str);
     })
 
@@ -209,7 +223,7 @@
         </div>
         `;
         var lms = event.path[1];
-
+        
         lms.insertAdjacentHTML('beforeEnd',"<hr>"+html)
     }
     
@@ -219,9 +233,9 @@
             <label class="form-label col-2"><span class="c-red">*</span>图片上传</label>
             <input type="file" class="image" name="image-`+id+`[]" value="上传图片">
         </div>`;
-        var lala = event.path[1].childNodes[7];
-     
-        lala.insertAdjacentHTML('beforeBegin',html)
+        var lala = event.path[0];
+        console.log(lala)
+        lala.insertAdjacentHTML('afterEnd',html)
         $(".image").change(function(){
         // 获取选择的图片
         var file = this.files[0];

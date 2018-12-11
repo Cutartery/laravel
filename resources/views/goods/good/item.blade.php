@@ -147,7 +147,9 @@
 					<div class="zoom">
 						<!--默认第一个预览-->
 						<div id="preview" class="spec-preview">
-							<span class="jqzoom"><img jqimg="img/_/b1.png" src="img/_/s1.png" /></span>
+								<span class="jqzoom">
+									<img jqimg="/uploads/{{$image[0]['sp_image']}}" src="/uploads/{{$image[0]['bg_image']}}"/>
+								</span>
 						</div>
 						<!--下方的缩略图-->
 						<div class="spec-scroll">
@@ -155,15 +157,11 @@
 							<!--左右按钮-->
 							<div class="items">
 								<ul>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s1.png" bimg="img/_/b1.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s2.png" bimg="img/_/b2.png" onmousemove="preview(this)" /></li>
-									<li><img src="img/_/s3.png" bimg="img/_/b3.png" onmousemove="preview(this)" /></li>
+									@foreach ($image as $v)
+										<li>
+											<img src="/uploads/{{$v->bg_image}}" bimg="/uploads/{{$v->sp_image}}" onmousemove="preview(this)" />
+										</li>
+									@endforeach
 								</ul>
 							</div>
 							<a class="next">&gt;</a>
@@ -172,7 +170,7 @@
 				</div>
 				<div class="fr itemInfo-wrap">
 					<div class="sku-name">
-						<h4>Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机</h4>
+						<h4>{{$data[0]->pro_name}}</h4>
 					</div>
 					<div class="news"><span>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</span></div>
 					<div class="summary">
@@ -182,7 +180,7 @@
 							</div>
 							<div class="fl price">
 								<i>¥</i>
-								<em>5299.00</em>
+								<em>{{$data[0]->sku_price}}</em>
 								<span>降价通知</span>
 							</div>
 							<div class="fr remark">
@@ -226,56 +224,14 @@
 										<i>选择颜色</i>
 									</div>
 								</dt>
-								<dd><a href="javascript:;" class="selected">金色<span title="点击取消选择">&nbsp;</span>
-									</a></dd>
+								<dd>
+									<a href="javascript:;" class="selected">金色
+										<span title="点击取消选择">&nbsp;</span>
+									</a>
+								</dd>
 								<dd><a href="javascript:;">银色</a></dd>
 								<dd><a href="javascript:;">黑色</a></dd>
 							</dl>
-							<dl>
-								<dt>
-									<div class="fl title">
-										<i>内存容量</i>
-									</div>
-								</dt>
-								<dd><a href="javascript:;" class="selected">16G<span title="点击取消选择">&nbsp;</span>
-									</a></dd>
-								<dd><a href="javascript:;">64G</a></dd>
-								<dd><a href="javascript:;" class="locked">128G</a></dd>
-							</dl>
-							<dl>
-								<dt>
-									<div class="fl title">
-										<i>选择版本</i>
-									</div>
-								</dt>
-								<dd><a href="javascript:;" class="selected">公开版<span title="点击取消选择">&nbsp;</span>
-									</a></dd>
-								<dd><a href="javascript:;">移动版</a></dd>
-							</dl>
-							<dl>
-								<dt>
-									<div class="fl title">
-										<i>购买方式</i>
-									</div>
-								</dt>
-								<dd><a href="javascript:;" class="selected">官方标配<span title="点击取消选择">&nbsp;</span>
-									</a></dd>
-								<dd><a href="javascript:;">移动优惠版</a></dd>
-								<dd><a href="javascript:;" class="locked">电信优惠版</a></dd>
-							</dl>
-							<dl>
-								<dt>
-									<div class="fl title">
-										<i>套　　装</i>
-									</div>
-								</dt>
-								<dd><a href="javascript:;" class="selected">保护套装<span title="点击取消选择">&nbsp;</span>
-									</a></dd>
-								<dd><a href="javascript:;" class="locked">充电套装</a></dd>
-
-							</dl>
-
-
 						</div>
 
 						<div class="summary-wrap">

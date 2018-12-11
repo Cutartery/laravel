@@ -54,6 +54,12 @@ class ProductController extends Controller
         foreach($data as $k => $v){
             $str = explode("-",$k);
             if(isset($str[1])){
+                if($str[0]=="pro_title"){
+                    $goods['title'][$str[1]] = $v;
+                }
+                if($str[0]=="pro_name"){
+                    $goods['name'][$str[1]] = $v;
+                }
                 if($str[0]=="sku_stock"){
                     $goods['stock'][$str[1]] = $v;
                 }
@@ -75,7 +81,7 @@ class ProductController extends Controller
                 }
             }
         }
-        
+        // dd($goods);
         $product = new Product;
         $product->fill($req->all());
         $product->save();
@@ -92,7 +98,9 @@ class ProductController extends Controller
             $sku = sku::create([
                 'pro_id'=>$pro_id,
                 'sku_stock'=>$v,
-                'sku_price'=>$goods['price'][$k]
+                'sku_price'=>$goods['price'][$k],
+                'name'=>$goods['name'][$k],
+                'title'=>$goods['title'][$k]
             ]);
             $sku_id = $sku->id;
             // dd($sku_id);
@@ -122,8 +130,13 @@ class ProductController extends Controller
                     $img->resize(400,400);
                     $img->save('./uploads/'.$bg_path);
 
+                    $sp_path = 'thumbnail/'.$date.'/sp_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(800,800);
+                    $img->save('./uploads/'.$sp_path);
+
                     $image = image::create([
                         'sku_id' => $sku_id,
+                        'sp_image' => $sp_path,
                         'bg_image' => $bg_path,
                         'md_image' => $md_path,
                         'sm_image' => $sm_path,

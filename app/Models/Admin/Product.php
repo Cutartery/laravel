@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['pro_name','brand_id','ify_id1','ify_id2','ify_id3','pro_content'];
+    protected $fillable = ['brand_id','ify_id1','ify_id2','ify_id3'];
 
     //页面显示商品添加
     public function doproducts_List()

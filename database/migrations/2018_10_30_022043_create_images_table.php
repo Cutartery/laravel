@@ -16,6 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('sku_id')->comment('sku_id');
+            $table->string('sp_image')->comment('超大图');
             $table->string('bg_image')->comment('大图');
             $table->string('md_image')->comment('中图');
             $table->string('sm_image')->comment('小图');
