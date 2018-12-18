@@ -170,7 +170,7 @@
 				</div>
 				<div class="fr itemInfo-wrap">
 					<div class="sku-name">
-						<h4>{{$data[0]->pro_name}}</h4>
+						<h4>{{$data[0]->title}}</h4>
 					</div>
 					<div class="news"><span>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</span></div>
 					<div class="summary">
@@ -229,8 +229,6 @@
 										<span title="点击取消选择">&nbsp;</span>
 									</a>
 								</dd>
-								<dd><a href="javascript:;">银色</a></dd>
-								<dd><a href="javascript:;">黑色</a></dd>
 							</dl>
 						</div>
 

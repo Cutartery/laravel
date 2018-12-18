@@ -46,7 +46,7 @@ class classify extends Model
     }
     public function goods_search($id){
         $data = DB::table('products as pro')
-        ->select('sku.id as sku_id','img.bg_image','sku.sku_price','pro.pro_name')
+        ->select('sku.id as sku_id','img.bg_image','sku.sku_price','sku.name')
         ->leftJoin('skus as sku','sku.pro_id','=','pro.id')
         ->leftJoin('images as img','img.sku_id','=','sku.id')
         ->groupBy('pro.id')
@@ -64,6 +64,9 @@ class classify extends Model
         ->where('sku.id',$id)
         ->get();
         return $data;
+    }
+    public function color($id){
+        // $data = 
     }
 
 

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Images;
 use File;
 use DB;
 use App\Http\Controllers\Controller;
@@ -13,7 +12,7 @@ use App\Models\Admin\bran_ify;
 use App\Models\Admin\sku;
 use App\Models\Admin\attribute;
 use App\Models\Admin\image;
-use Intervention\Image\ImageManager;
+use Intervention\Image\ImageManagerStatic as Img;
 use Storage;
 
 
@@ -81,7 +80,6 @@ class ProductController extends Controller
                 }
             }
         }
-        // dd($goods);
         $product = new Product;
         $product->fill($req->all());
         $product->save();
@@ -116,23 +114,23 @@ class ProductController extends Controller
                 foreach($goods['img'][$k] as $k3 => $v3){
 
                     $imagepath = $v3->path();
-                    $img = Images::make($imagepath);
-
-                    $sm_path = 'thumbnail/'.$date.'/sm_'.md5(time()).$goods['imgName'][$k][$k3];
-                    $img->resize(80,80);
-                    $img->save('./uploads/'.$sm_path);
-
-                    $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$goods['imgName'][$k][$k3];
-                    $img->resize(250,250);
-                    $img->save('./uploads/'.$md_path);
-        
-                    $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$goods['imgName'][$k][$k3];
-                    $img->resize(400,400);
-                    $img->save('./uploads/'.$bg_path);
+                    $img = Img::make($imagepath);
 
                     $sp_path = 'thumbnail/'.$date.'/sp_'.md5(time()).$goods['imgName'][$k][$k3];
                     $img->resize(800,800);
                     $img->save('./uploads/'.$sp_path);
+
+                    $bg_path = 'thumbnail/'.$date.'/bg_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(400,400);
+                    $img->save('./uploads/'.$bg_path);
+
+                    $md_path = 'thumbnail/'.$date.'/md_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(250,250);
+                    $img->save('./uploads/'.$md_path);
+
+                    $sm_path = 'thumbnail/'.$date.'/sm_'.md5(time()).$goods['imgName'][$k][$k3];
+                    $img->resize(80,80);
+                    $img->save('./uploads/'.$sm_path);
 
                     $image = image::create([
                         'sku_id' => $sku_id,

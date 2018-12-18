@@ -39,8 +39,9 @@ class GoodsController extends Controller
     public function goods_item(){
         $id = $_GET['sku_id'];
         $image = image::where('sku_id',$id)->get();
-        $class = new classify;
-        $data = $class->goods_item($id);
+        $Class = new classify;
+        $data = $Class->goods_item($id);
+        $color = $Class->color($data[0]->pro_id);
         // dd($data);
         return view('goods.good.item',['data'=>$data,'image'=>$image]);
     }

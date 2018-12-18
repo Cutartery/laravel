@@ -363,7 +363,7 @@
 									</strong>
 								</div>
 								<div class="attr">
-									<em>{{$v->pro_name}}</em>
+									<em>{{$v->name}}</em>
 								</div>
 								<div class="cu">
 									<em></em>
