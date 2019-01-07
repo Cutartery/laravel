@@ -148,7 +148,7 @@
 						<!--默认第一个预览-->
 						<div id="preview" class="spec-preview">
 								<span class="jqzoom">
-									<img jqimg="/uploads/{{$image[0]['sp_image']}}" src="/uploads/{{$image[0]['bg_image']}}"/>
+									<img id="showimg" jqimg="/uploads/{{$image[0]['sp_image']}}" src="/uploads/{{$image[0]['bg_image']}}"/>
 								</span>
 						</div>
 						<!--下方的缩略图-->
@@ -156,12 +156,8 @@
 							<a class="prev">&lt;</a>
 							<!--左右按钮-->
 							<div class="items">
-								<ul>
-									@foreach ($image as $v)
-										<li>
-											<img src="/uploads/{{$v->bg_image}}" bimg="/uploads/{{$v->sp_image}}" onmousemove="preview(this)" />
-										</li>
-									@endforeach
+								<ul id="images">
+								
 								</ul>
 							</div>
 							<a class="next">&gt;</a>
@@ -224,10 +220,16 @@
 										<i>选择颜色</i>
 									</div>
 								</dt>
-								<dd>
-									<a href="javascript:;" class="selected">金色
-										<span title="点击取消选择">&nbsp;</span>
-									</a>
+								<dd id="attr">
+									<?php $a = 0;?>
+									@foreach ($color as $v)
+									
+								<a @if($a == 0) class="selected" @endif onclick="check(event)" name="{{$v->id}}" href="javascript:;">
+									{{$v->name}}
+											<span title="点击取消选择">&nbsp;</span>
+										</a>
+										<?php $a++ ?>
+									@endforeach
 								</dd>
 							</dl>
 						</div>
@@ -629,7 +631,6 @@
 		</div>
 	</div>
 	<!-- 底部栏位 -->
-
 	<!--页面底部  开始 -->
 	<div class="clearfix footer">
 		<div class="py-container">
@@ -761,8 +762,6 @@
 			</div>
 		</div>
 	</div>
-
-
 	<!--侧栏面板开始-->
 	<div class="J-global-toolbar">
 		<div class="toolbar-wrap J-wrap">
@@ -882,7 +881,6 @@
 
 		</div>
 	</div>
-
 	<script type="text/template" id="tbar-cart-item-template">
 	<div class="tbar-cart-item" >
 		<div class="jtc-item-promo">
@@ -899,9 +897,6 @@
 		</div>
 	</div>
 </script>
-
-
-
 	<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function () {
@@ -917,16 +912,62 @@
 			});
 
 		})
+		
 	</script>
 	<script type="text/javascript" src="js/model/cartModel.js"></script>
 	<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
 	<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
 	<script type="text/javascript" src="js/plugins/jquery.jqzoom/jquery.jqzoom.js"></script>
 	<script type="text/javascript" src="js/plugins/jquery.jqzoom/zoom.js"></script>
-	<script type="text/javascript" src="index/index.js"></script>
+	<script type="text/javascript" src="js/pages/index.js"></script>
 
 
 	<!--页面底部  结束 -->
 </body>
 
 </html>
+<script>
+	var id = document.getElementsByClassName('selected')[0].getAttribute('name')
+	var oldId = '';
+	function shopInfo(id){
+		if(oldId!=id){
+			if(id)
+			{
+				$.ajax({
+					url: '{{"ajax_item"}}?id='+id,
+					type:'get',
+					dataType:'json',
+					success:function(data){
+						var imgStr = '';
+						document.querySelector('.sku-name h4').innerHTML = data.data[0].title;
+						document.querySelector('.price em').innerHTML = data.data[0].sku_price;
+						if(data.image)
+						{
+							for(let i=0;i<data.image.length;++i){
+								imgStr += `<li>
+												<img src="/uploads/`+data.image[i].bg_image+`" bimg="/uploads/`+data.image[i].sp_image+`" onmousemove="preview(this)" />
+											</li>`
+							}
+						}
+						document.querySelector('#images').innerHTML = imgStr
+						document.querySelector('#showimg').setAttribute('jqimg','/uploads/'+data.image[0].sp_image)
+						document.querySelector('#showimg').setAttribute('src','/uploads/'+data.image[0].bg_image)
+					}
+				})
+			}
+			oldId = id;
+		}
+		
+		
+	}
+	
+	shopInfo(id);
+	function check(ev) {
+		
+		document.querySelector('.selected').classList.remove('selected')
+		ev.path[0].classList.add('selected');
+		var id = ev.path[0].getAttribute('name');
+		shopInfo(id);
+	}
+	
+</script>

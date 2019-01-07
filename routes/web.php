@@ -143,6 +143,10 @@ Route::group(['middleware' => 'goods'], function(){
 
 Route::get('/goods_search','goods\GoodsController@goods_search')->name('goods_search');//商品页
 Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item');//商品详情页
+
+Route::get('/ajax_item','goods\GoodsController@ajax_item')->name('ajax_item');//ajax切换详情页
+
+
 Route::get('/goods_getOrderinfo','goods\ShoppingController@goods_getOrderinfo')->name('goods_getOrderinfo');//购物车结算页
 Route::get('/goods_success_cart','goods\ShoppingController@goods_success_cart')->name('goods_success_cart');//加入购物车提示页
 Route::get('/goods_cart','goods\ShoppingController@goods_cart')->name('goods_cart');//购物车首页

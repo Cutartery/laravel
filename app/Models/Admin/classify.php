@@ -65,8 +65,16 @@ class classify extends Model
         ->get();
         return $data;
     }
-    public function color($id){
-        // $data = 
+
+    public function ajax_item($id){
+        $data = DB::table('products as pro')
+        ->leftJoin('skus as sku','sku.pro_id','=','pro.id')
+        ->leftJoin('images as img','img.sku_id','=','sku.id')
+        ->leftJoin('attributes as att','att.sku_id','=','sku.id')
+        ->groupBy('sku.id')
+        ->where('sku.id',$id)
+        ->get();
+        return $data;
     }
 
 

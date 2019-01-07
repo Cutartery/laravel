@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\classify;
 use App\Models\Admin\image;
+use App\Models\Admin\sku;
 use Storage;
 class GoodsController extends Controller
 {
@@ -40,9 +41,21 @@ class GoodsController extends Controller
         $id = $_GET['sku_id'];
         $image = image::where('sku_id',$id)->get();
         $Class = new classify;
+        $Sku = new sku;
         $data = $Class->goods_item($id);
-        $color = $Class->color($data[0]->pro_id);
-        // dd($data);
-        return view('goods.good.item',['data'=>$data,'image'=>$image]);
+        $color = $Sku->color($data[0]->pro_id);
+        // dd($color);
+        return view('goods.good.item',['data'=>$data,'image'=>$image,'color'=>$color]);
+    }
+
+    //ajax切换详情页
+    public function ajax_item(Request $req){
+        $id = $req->all();
+        $image = image::where('sku_id',$id)->get();
+        $Class = new classify;
+        $data = $Class->ajax_item($id);
+
+        return json_encode(['data'=>$data,'image'=>$image]);
+
     }
 }
