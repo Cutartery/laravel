@@ -145,6 +145,7 @@ Route::get('/goods_search','goods\GoodsController@goods_search')->name('goods_se
 Route::get('/goods_item','goods\GoodsController@goods_item')->name('goods_item');//商品详情页
 
 Route::get('/ajax_item','goods\GoodsController@ajax_item')->name('ajax_item');//ajax切换详情页
+Route::post('/ajax_itax','goods\GoodsController@ajax_itax')->name('ajax_itax');//ajax加入购物车
 
 
 Route::get('/goods_getOrderinfo','goods\ShoppingController@goods_getOrderinfo')->name('goods_getOrderinfo');//购物车结算页

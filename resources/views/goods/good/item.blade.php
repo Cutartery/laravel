@@ -239,15 +239,15 @@
 								<div class="control-group">
 									<div class="controls">
 										<input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-										<a href="javascript:void(0)" class="increment plus">+</a>
-										<a href="javascript:void(0)" class="increment mins">-</a>
+										<a href="javascript:void(0)" onclick="jia()" class="increment plus">+</a>
+										<a href="javascript:void(0)" onclick="jian()" class="increment mins">-</a>
 									</div>
 								</div>
 							</div>
 							<div class="fl">
 								<ul class="btn-choose unstyled">
 									<li>
-										<a href="cart.html" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+										<a href="javascript:void(0)" target="_blank" onclick="gwc()" class="sui-btn  btn-danger addshopcar">加入购物车</a>
 									</li>
 								</ul>
 							</div>
@@ -927,8 +927,27 @@
 
 </html>
 <script>
+
+	var id = document.getElementsByClassName('selected')[0].getAttribute('name')                                                                                
+		// console.log(id);
+	function gwc(){
 	var id = document.getElementsByClassName('selected')[0].getAttribute('name')
+	var cont = document.querySelector('.itxt').value
+		console.log(id,cont);
+		$.ajax({
+			url:'{{"ajax_itax"}}',
+			type:'get',
+			data:{id:id,cont:cont,_token:"{{csrf_token()}}"},
+			dataType:'json',
+			success:function(data){
+
+			}
+		})
+	}
+
+
 	var oldId = '';
+	
 	function shopInfo(id){
 		if(oldId!=id){
 			if(id)
@@ -957,17 +976,24 @@
 			}
 			oldId = id;
 		}
-		
-		
 	}
-	
+
 	shopInfo(id);
 	function check(ev) {
-		
 		document.querySelector('.selected').classList.remove('selected')
 		ev.path[0].classList.add('selected');
 		var id = ev.path[0].getAttribute('name');
+		document.querySelector('.itxt').value=1
 		shopInfo(id);
+	}
+	function jia(){
+		document.querySelector('.itxt').value++
+	}
+	function jian(){
+		let a = document.querySelector('.itxt').value
+		if(a>1){
+			document.querySelector('.itxt').value--
+		}
 	}
 	
 </script>

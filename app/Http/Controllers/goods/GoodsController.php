@@ -28,7 +28,6 @@ class GoodsController extends Controller
         $id = $_GET['id'];
         $class = new classify;
         $data = $class->goods_search($id);
-        // dd($data);
         return view('goods.good.search',[
             'data' => $data,
             'id' => $id
